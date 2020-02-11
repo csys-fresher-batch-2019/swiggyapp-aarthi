@@ -3,26 +3,27 @@ package swiggyhotel.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 //import java.util.ArrayList;
 
 import swiggyhotel.ConnectionUtil;
+import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.DiscountDAO;
+import swiggyhotel.model.DbException;
 
 public class DiscountDAOImpl implements DiscountDAO {
+	public static final LoggerUtil logger=LoggerUtil.getInstance();
 
-	public  int calculateDiscountAmt(int orderId) throws Exception {
+	public  int calculateDiscountAmt(int orderId) throws DbException {
            
-		Connection con = null;
-		Statement stmt = null;
-		 float discount=0;
-		 int discountAmt=0;
-		try {
-		con=ConnectionUtil.getConnection();
-		stmt=con.createStatement();
-		String sql="select total_amt from orders where order_id='"+orderId+"' ";
-		ResultSet ro=stmt.executeQuery(sql);
-		
+	
+		float discount=0;
+		int discountAmt=0;
+		String sql="select total_amt from orders where order_id=?";
+		try (Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
+	    pst.setInt(1,orderId);
+	    try(ResultSet ro=pst.executeQuery()){
 		int amt = 0;
 		if ( ro.next()) {
 			amt = ro.getInt("total_amt");
@@ -41,54 +42,31 @@ public class DiscountDAOImpl implements DiscountDAO {
 		}
 	
 		 discountAmt=amt-(int)discount;
-	   }
-         catch (Exception e) {
-			// TODO Auto-generated catch block
+	     }
+			
+		  }
+	
+           catch (Exception e) {
 			e.printStackTrace();
-		}
-		//return discountAmt;
-		finally {
-			if (stmt != null ) {
-				stmt.close();
 			}
-			if ( con != null) {
-				con.close();
-			}
-		}
-		
 		return discountAmt;
+		
+		
+		
 	}
 
-	public void updateDiscountAmt(int orderId) throws Exception {
-		//DiscountDAOImpl ob=new DiscountDAOImpl();
+	public void updateDiscountAmt(int orderId) throws DbException {
 		int discount =calculateDiscountAmt(orderId);
-		Connection con = null;
-		PreparedStatement pst=null;
-		try {
-		//con=ConnectionUtil.getConnection();
 		String sql="update orders set after_discount=?  where order_id=?";
-		con=ConnectionUtil.getConnection();
-		pst=con.prepareStatement(sql);
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)) {
 		pst.setInt(1,discount);
 		pst.setInt(2,orderId);
 		int rows=pst.executeUpdate();
-		System.out.print(rows+ "row updated" );
+		logger.info(rows+ "row updated" );
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if (pst != null ) {
-				pst.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
-		}
-		
-		
-		
 		
 	}
 

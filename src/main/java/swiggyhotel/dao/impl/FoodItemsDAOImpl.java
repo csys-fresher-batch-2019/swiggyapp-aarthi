@@ -12,8 +12,9 @@ import java.util.List;
 //import java.util.ArrayList;
 
 import swiggyhotel.ConnectionUtil;
+import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.FoodItemsDAO;
-
+import swiggyhotel.model.DbException;
 import swiggyhotel.model.FoodDetails;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import swiggyhotel.model.FoodDetails;
 
 public class FoodItemsDAOImpl implements FoodItemsDAO {
 	
-
+	public static final LoggerUtil logger=LoggerUtil.getInstance();
 	/*public void insertItems(int itemId,String itemName,String foodType,int price)throws Exception {
 		Connection con = null;
 		Statement stmt = null;
@@ -52,19 +53,12 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		
 	}*/
 	
-	public List<FoodDetails> findAll() throws Exception
+	public List<FoodDetails> findAll() throws DbException
 	{  
-
-
-		List<FoodDetails> l=new ArrayList<FoodDetails>();
-		Connection con = null;
-		Statement stmt = null;
-		try {
-		con=ConnectionUtil.getConnection();
-		stmt=con.createStatement();
+        List<FoodDetails> l=new ArrayList<FoodDetails>();
 		String sql="select * from foodstuff_items";
-		ResultSet ro=stmt.executeQuery(sql);
-		
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)) {
+		try(ResultSet ro=pst.executeQuery(sql)){
 		while(ro.next())
 		{   
 			FoodDetails ob=new FoodDetails();
@@ -76,150 +70,134 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 			ob.images=ro.getString("images");
 			l.add(ob);
         }
-		//return l;
+		}
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if (stmt != null ) {
-				stmt.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
-		}
-		//return l;
+		
 		return l;
-		
-		
-		
-		
 	}
 
 	
 
 	
 
-       public void updateMenuId(int menuId,String itemName)throws Exception {
-    	   Connection con = null;
-   		   Statement stmt = null;	   
-	    try {
-		    con=ConnectionUtil.getConnection();
-		 stmt=con.createStatement();
+       public void updateMenuId(int menuId,String itemName)throws DbException {
+    	   String sqlQuery="update foodstuff_items set menu_id=? where item_name=?";
+    	      
+	    try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)) {
+		pst.setInt(1, menuId);
+		pst.setString(2, itemName);
 		
-	
-		String sqlQuery="update foodstuff_items set menu_id='"+menuId+"' where item_name='"+itemName+"'";
-		System.out.print(sqlQuery);
-		int row1=stmt.executeUpdate(sqlQuery);
-		 System.out.print(row1+"row updated");
+	    //logger.debug(sqlQuery);
+		int row1=pst.executeUpdate(sqlQuery);
+		logger.info(row1+"row updated");
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if (stmt != null ) {
-				stmt.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
+		
 		}
 		
-		//return null;
-	}
 
-	public void insertItems(int itemId,String itemName,String foodType,int price,String images) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();;
-		try {
-		String sqlQuery="insert into foodstuff_items(item_id,item_name,food_type,price,images)values('"+itemId+"','"+itemName+"','"+foodType+"','"+price+"','"+images+"')";
-		System.out.print(sqlQuery);
-		int row=stmt.executeUpdate(sqlQuery);
-		 System.out.print(row+"row inserted");
+	
+
+	public void insertItems(int itemId,String itemName,String foodType,int price,String images) throws DbException {
+		String sqlQuery="insert into foodstuff_items(item_id,item_name,food_type,price,images)values(?,?,?,?,?)";
+		
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)) {
+		pst.setInt(1, itemId);
+		pst.setString(2, itemName);
+		pst.setString(3, foodType);
+		pst.setInt(4,price);
+		pst.setString(5,images);
+		
+		logger.debug(sqlQuery);
+		int row=pst.executeUpdate(sqlQuery);
+		logger.info(row+"row inserted");
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if (stmt != null ) {
-				stmt.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
-		}
-		
-		//return null;
-		
 	}
-	public void getFoodDetails(String foodType) throws Exception
+	public void getFoodDetails(String foodType) throws DbException
 	{
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();
-		try {
-		String sql1="select item_name,price from foodstuff_items where food_type='"+foodType+"'";
-		ResultSet ro1=stmt.executeQuery(sql1);
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
+		String sql1="select item_name,price from foodstuff_items where food_type=?";
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1)) {
+		
+		try(ResultSet ro1=pst.executeQuery(sql1)){
+	      pst.setString(1,foodType);
 		while(ro1.next())
 		{   
-			//FoodDetails ob=new FoodDetails();
-			/*int id=ro1.getInt("item_id");
-			System.out.println(id);*/
+			
 			String name=ro1.getString("item_name");
-			System.out.println(name);
-			/*String cate=ro1.getString("food_type");
-			System.out.println(cate);*/
+			logger.debug(name);
 			int pri=ro1.getInt("price");
-			System.out.println(pri);
-			/*int menuid=ro1.getInt("menu_id");
-			System.out.println(menuid);*/
+			logger.debug(pri);
+			
+		}
 		}
 		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if (stmt != null ) {
-				stmt.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
-		}
 	}
-	public void getItemName(int menuId) throws Exception
+	/*public void getItemName(int menuId) throws Exception
 	{
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();
-		try {
-		String sql1="select item_name from foodstuff_items where menu_id='"+menuId+"'";
-		ResultSet ro1=stmt.executeQuery(sql1);
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
+		String sql1="select item_name from foodstuff_items where menu_id=?";
+		
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1);) {
+		
+		try(ResultSet ro1=pst.executeQuery(sql1);){
+	    pst.setInt(1,menuId);
 		while(ro1.next())
 		{   
-			//FoodDetails ob=new FoodDetails();
+			
 			String name=ro1.getString("item_name");
 			System.out.println(name);
 			
 		}
 		}
+		}
 		catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			if (stmt != null ) {
-				stmt.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
+		
+	}*/
+	public List<FoodDetails> getFoodsDetailsBySearchName(String searchname) throws DbException
+	{  
+
+
+		List<FoodDetails> l1=new ArrayList<FoodDetails>();
+		String sql="select * from foodstuff_items where item_name like ? or food_type like ?";
+		
+		try (Connection con =ConnectionUtil.getConnection();PreparedStatement pst =con.prepareStatement(sql)){
+		
+		
+		try(ResultSet ro=pst.executeQuery(sql)){
+			
+		pst.setString(1,"%"+searchname+"%");
+		pst.setString(2,"%"+searchname+"%");
+		
+		while(ro.next())
+		{   
+			FoodDetails ob=new FoodDetails();
+			ob.itemId=ro.getInt("item_id");
+			ob.itemName=ro.getString("item_name");
+			ob.foodType=ro.getString("food_type");
+		    ob.price=ro.getInt("price");
+			ob.menuId=ro.getInt("menu_id");
+			ob.images=ro.getString("images");
+			l1.add(ob);
+        }
 		}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return l1;
 	}
 	/*public void deleteItemId(int itemId) throws Exception
 	{

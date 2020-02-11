@@ -2,20 +2,23 @@ package swiggyhotel.dao.impl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import swiggyhotel.ConnectionUtil;
+import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.OrderItemDAO;
+import swiggyhotel.model.DbException;
 import swiggyhotel.model.OrderItemDetails;
 import swiggyhotel.model.UserDetails;
 
 //import java.util.ArrayList;
 
 public class OrderItemDAOImpl implements OrderItemDAO {
-
+	public static final LoggerUtil logger=LoggerUtil.getInstance();
 	/*public void getOrderIdAndQuantity(int orderId) throws Exception {
 		Connection con=ConnectionUtil.getConnection();
 		Statement stmt=con.createStatement();
@@ -53,32 +56,30 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		
 	}*/
 
-	public void updateStatus(int orderId,String comments) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
-		//boolean flag=true;
-		//Statement stmt=con.createStatement();
-		CallableStatement cstmt=con.prepareCall("{call procedure1(?,?)}");
+	public void updateStatus(int orderId,String comments) throws DbException {
+		try(Connection con=ConnectionUtil.getConnection();CallableStatement cstmt=con.prepareCall("{call procedure1(?,?)}")){
 		cstmt.setInt(1,orderId);
 		cstmt.setString(2,comments);
 		boolean flag=cstmt.execute();
-		System.out.println(flag);
-	   // String sqlQuery="update order_items o,orders r set r.status_info='cancelled',o.status='cancelled' where r.order_id=o.order_id and order_item_id='"+orderItemId+"'"; 
-		//System.out.print(sqlQuery);
-		//int row1=stmt.executeUpdate(sqlQuery);
-		 //System.out.print(row1);
-	
+	    logger.debug(flag);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	  
 		
 	}
 
 
 
-	public List<OrderItemDetails> findAll() throws Exception {
+	public List<OrderItemDetails> findAll() throws DbException {
 		List<OrderItemDetails> l=new ArrayList<OrderItemDetails>();
-		
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();
 		String sql="select * from order_items";
-		ResultSet ro=stmt.executeQuery(sql);
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
+		
+		
+		try(ResultSet ro=pst.executeQuery(sql)){
 		//List<FoodDetails> l=new ArrayList<FoodDetails>();
 		while(ro.next())
 		{   
@@ -93,20 +94,16 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		    ob.orderDate=ro.getDate("order_date");
 			l.add(ob);
 		}
+		}
+		}
+		catch(Exception e)
+	    {
+	    	e.printStackTrace();
+	    }
 		
 		return(l);
 		
 		
 		//return null;
 	}
-
-
-
-	
-
-
-
-
-	
-
 }

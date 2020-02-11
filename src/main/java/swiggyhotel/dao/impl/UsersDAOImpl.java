@@ -10,17 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import swiggyhotel.ConnectionUtil;
+import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.UsersDAO;
+import swiggyhotel.model.DbException;
 import swiggyhotel.model.UserDetails;
 
 public class UsersDAOImpl implements UsersDAO{
-
-	public List<UserDetails> displayUserDetails() throws Exception {
+	public static final LoggerUtil logger=LoggerUtil.getInstance();
+	public List<UserDetails> displayUserDetails() throws DbException {
 		List<UserDetails> l=new ArrayList<UserDetails>();
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();
 		String sql="select * from users";
-		ResultSet ro=stmt.executeQuery(sql);
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
+		
+		try(ResultSet ro=pst.executeQuery(sql)){
 		//List<FoodDetails> l=new ArrayList<FoodDetails>();
 		while(ro.next())
 		{   
@@ -33,54 +35,75 @@ public class UsersDAOImpl implements UsersDAO{
 		    ob.city=ro.getString("city");
 			l.add(ob);
 		}
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		return(l);
 	}
 
-	public HashMap<String, Integer> getNameAndtotalAmts(int orderId) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
-		String sqlQuery="select user_name,total_amt from users u,orders o where u.user_id=o.user_id and order_id=?";
-		PreparedStatement pst=con.prepareStatement(sqlQuery);
-		pst.setInt(1,orderId);
-		ResultSet rs=pst.executeQuery();
-		
+	public HashMap<String, Integer> getNameAndtotalAmts(int orderId) throws DbException {
 		HashMap<String,Integer> map = new HashMap<String, Integer>();
+		String sqlQuery="select user_name,total_amt from users u,orders o where u.user_id=o.user_id and order_id=?";
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)){
+			pst.setInt(1,orderId);
+		try(ResultSet rs=pst.executeQuery()){
+	    
+		
 		if(rs.next()) {
 			String username = rs.getString("user_name");
 			int totalAmount = rs.getInt("total_amt");
 			map.put(username, totalAmount);
 		}
+		
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return map;
 	}
 
-	public List<String> getNames(String city) throws Exception {
+	/*public List<String> getNames(String city) throws DbException {
 		List<String> l1=new ArrayList<String>();
-		Connection con=ConnectionUtil.getConnection();
 		String sql="select user_name from users where city=?";
-		PreparedStatement pst=con.prepareStatement(sql);
-		pst.setString(1,city);
-		ResultSet rs=pst.executeQuery();
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
+			pst.setString(1,city);
+		try(ResultSet rs=pst.executeQuery()){
+		
 		while(rs.next())
 		{
 			//UserDetails ob1=new UserDetails();
 		    String userName=rs.getString("user_name");
 		    l1.add(userName);
 		}
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		return(l1);
 		
-	}
+	}*/
 
-	public String login(String name,Long phoneno) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
-		String sql="select user_name,phone_no from users where user_name=? and phone_no=?";
-		PreparedStatement pst=con.prepareStatement(sql);
-		pst.setString(1,name);
-		pst.setLong(2,phoneno);
-		//boolean a=true;
-		ResultSet rs=pst.executeQuery();
-		//boolean a=true;
+	public String login(String name,Long phoneno) throws DbException {
 		String message=" ";
+		String sql="select user_name,phone_no from users where user_name=? and phone_no=?";
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
+			pst.setString(1,name);
+			pst.setLong(2,phoneno);
+			try(ResultSet rs=pst.executeQuery()){
+			
+		
+		//boolean a=true;
+		
+		
 		if(rs.next())
 		{
 			message="Welcome "+name;
@@ -89,31 +112,35 @@ public class UsersDAOImpl implements UsersDAO{
 		{
 			message="Login Failure";
 		}
-		/*String message=" ";
-		if(a)	
-		{
-			message="Welcome "+name;
+		//return message;
+	    }
 		}
-		else
+		catch(Exception e)
 		{
-			message="Login Failure";
-		}*/
+			e.printStackTrace();
+		}
 		return message;
 		
 	}
 
-	public void insertUserInfo(UserDetails ob) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
+	public void insertUserInfo(UserDetails ob) throws DbException {
+		
 		String sql="insert into users(user_id,user_name,phone_no,address,city) values(user_id_seq.nextval,?,?,?,?)";
-		PreparedStatement pst=con.prepareStatement(sql);
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 		//pst.setInt(1,ob.userId);
 		pst.setString(1,ob.userName);
 		pst.setLong(2,ob.phoneNo);
 		pst.setString(3,ob.address);
 		pst.setString(4,ob.city);
 		int row=pst.executeUpdate();
-		System.out.println(row+"row inserted");
+		logger.info(row+"row inserted");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
+		}
 		
 	}
 
@@ -121,7 +148,7 @@ public class UsersDAOImpl implements UsersDAO{
 	
 
 
-}
+
 	
 
 

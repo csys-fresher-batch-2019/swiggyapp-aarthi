@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import swiggyhotel.dao.DAOFactory;
 import swiggyhotel.dao.DiscountDAO;
+import swiggyhotel.model.DbException;
 
 public class TestDiscountDetails {
 	public static final LoggerUtil logger=LoggerUtil.getInstance();

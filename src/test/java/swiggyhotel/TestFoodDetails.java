@@ -14,7 +14,7 @@ public class TestFoodDetails {
 	public static void main(String[] args) throws Exception {
 		FoodItemsDAO ob=DAOFactory.getFoodItemsDAO();
 		Scanner s=new Scanner(System.in);
-		logger.debug("1.InsertFoods\n2.UpdateMenuId\n3.findAll\n4.GetFoodDetails\n");
+		logger.debug("1.InsertFoods\n2.UpdateMenuId\n3.FindAll\n4.GetFoodDetails\n5.GetFoodsDetailsBySearchName\n");
 		logger.debug("\nEnter the choice");
 		int choice=s.nextInt();
 		switch(choice)
@@ -52,6 +52,15 @@ public class TestFoodDetails {
 			    String foodtype=s.next();
 		    	ob.getFoodDetails(foodtype);
 		    break;
+		    case 5:List<FoodDetails> l1=new ArrayList<FoodDetails>();
+	           //FoodDetails ob=new FoodDetails();
+		         logger.debug("enter the searchname");
+		         String searchName=s.next();
+		         l1= ob.getFoodsDetailsBySearchName(searchName);
+	             for (FoodDetails foodDetails : l1) {
+				 logger.debug(foodDetails.toString());
+			}
+	    break;
 		    
 		    default:logger.debug("invalid choice");
 		    break;

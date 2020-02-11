@@ -3,6 +3,13 @@ package swiggyhotel.model;
 public class RatingDetails {
     public int userId;
     public int itemId;
+    public String itemName;
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
 	public int ratingPoints;
 	
 	public void setUserId(int userId)
@@ -31,7 +38,8 @@ public class RatingDetails {
 	}
 	@Override
 	public String toString() {
-		return "RatingDetails [userId=" + userId + ", itemId=" + itemId + ", ratingPoints=" + ratingPoints + "]";
+		return "RatingDetails [userId=" + userId + ", itemId=" + itemId + ", itemName=" + itemName + ", ratingPoints="
+				+ ratingPoints + "]";
 	} 
 
 }

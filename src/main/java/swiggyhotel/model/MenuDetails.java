@@ -1,6 +1,10 @@
 package swiggyhotel.model;
 
+/*import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;*/
 public class MenuDetails {
+	
 	public int menuId;
 	public String category;
 	@Override
