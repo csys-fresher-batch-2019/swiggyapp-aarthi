@@ -34,9 +34,9 @@ public class MenusDAOImpl implements MenusDAO{
 		{   
 			MenuDetails ob=new MenuDetails();
 			ob.menuId=ro1.getInt("menu_id");
-			//System.out.println(id);
+			
 			ob.category=ro1.getString("category");
-			//System.out.println(name);
+			
 			l.add(ob);
 		}
 	    }
@@ -54,10 +54,8 @@ public class MenusDAOImpl implements MenusDAO{
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement stmt=con.prepareStatement(sql1)){
 		
 		try(ResultSet ro1=stmt.executeQuery()){
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
 		while(ro1.next())
 		{   
-			//FoodDetails ob=new FoodDetails();
 			
 			String cate=ro1.getString("category");
 			logger.debug(cate);

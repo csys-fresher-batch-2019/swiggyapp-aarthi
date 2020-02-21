@@ -116,7 +116,7 @@ public class DiscountDAOImpl implements DiscountDAO {
 		}
 
 		return list;
-		// return null;
+		
 	}
 
 }

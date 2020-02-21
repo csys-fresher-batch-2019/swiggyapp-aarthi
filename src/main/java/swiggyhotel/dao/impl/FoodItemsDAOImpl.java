@@ -24,34 +24,7 @@ import swiggyhotel.model.FoodDetails;
 public class FoodItemsDAOImpl implements FoodItemsDAO {
 	
 	public static final LoggerUtil logger=LoggerUtil.getInstance();
-	/*public void insertItems(int itemId,String itemName,String foodType,int price)throws Exception {
-		Connection con = null;
-		Statement stmt = null;
-		try {
-			con=ConnectionUtil.getConnection();
-			stmt=con.createStatement();
-			String sqlQuery="insert into foodstuff_items(item_id,item_name,categories,price,menu_id)"
-					+ "values('"+itemId+"','"+itemName+"','"+foodType+"','"+price+"')";
-			System.out.print(sqlQuery);
-			int row=stmt.executeUpdate(sqlQuery);
-			 System.out.print(row);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			if (stmt != null ) {
-				stmt.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
-		}
-		//return null;
-		
-		
-		
-	}*/
+	
 	
 	public List<FoodDetails> findAll() throws DbException
 	{  
