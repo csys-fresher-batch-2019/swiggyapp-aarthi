@@ -13,6 +13,9 @@ public interface UsersDAO {
 	//public List<String> getNames(String city) throws Exception;
 	public void insertUserInfo(UserDetails ob)throws DbException;
 	public String login(String name,Long phoneno)throws DbException;
+	public int getUserId(String name,Long phoneno)throws DbException;
+	public String adminLogin(String userName,String passWord)throws DbException;
+	public int getOrderId(int userId)throws DbException;
      
 }
 	

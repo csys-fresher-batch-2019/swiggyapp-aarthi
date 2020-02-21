@@ -1,5 +1,6 @@
 package swiggyhotel;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,9 +14,10 @@ public class TestOrderItemDetails {
 
 	public static void main(String[] args) throws Exception {
 		OrderItemDAO ob=DAOFactory.getOrderItemDAO();
+		OrderItemDetails a=new OrderItemDetails();
 		List<OrderItemDetails> l1=new ArrayList<OrderItemDetails>();
 		Scanner s=new Scanner(System.in);
-		logger.debug("1.findAll\n2.updateStatus\n");
+		logger.debug("1.findAll\n2.updateStatus\n3.insertorderitems\n");
 		logger.debug("enter the choice");
 		int choice=s.nextInt();
 		switch(choice)
@@ -33,6 +35,18 @@ public class TestOrderItemDetails {
 		        ob.updateStatus(orderId,comments);
 		        break;
 		        default:logger.debug("Invalid choice");
+		        break;
+	    case 3: logger.debug("enter the orderid");
+                a.orderId=s.nextInt();
+                logger.debug("enter the itemid");
+		        a.itemId=s.nextInt();
+		        logger.debug("enter the quantity");
+		        a.quantity=s.nextInt();
+		        logger.debug("enter the totalamounts");
+		        a.totalAmounts=s.nextInt();
+		        LocalDateTime orderTime  = LocalDateTime.now();
+		        a.orderDate=orderTime;
+		        ob.insertorderitems(a);
 		        break;
 		
 		

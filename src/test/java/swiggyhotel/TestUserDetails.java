@@ -17,7 +17,7 @@ public class TestUserDetails {
 
     UserDetails ob=new UserDetails();
     Scanner s=new Scanner(System.in);
-    logger.debug("1.displayUserDetails\n2.insertUserInfo\n3.login\n4.getNameAndtotalAmts\n");
+    logger.debug("1.displayUserDetails\n2.insertUserInfo\n3.login\n4.getNameAndtotalAmts\n5.getuserId\n6.adminlogin\n7.getorderid\n");
     logger.debug("enter the choice");
     int choice=s.nextInt();
     UsersDAO obj=DAOFactory.getUsersDAO();
@@ -66,9 +66,26 @@ public class TestUserDetails {
            map=obj.getNameAndtotalAmts(orderId);
            logger.debug(map);
            break;
-    	 
-           default:logger.debug("invalid choice");
-           break;
+     case 5:logger.debug("enter the username");
+            String userName1=s.next();
+            logger.debug("enter the phoneno");
+            Long phoneno1=s.nextLong();
+	        int userId=obj.getUserId(userName1, phoneno1);
+	        logger.debug(userId);
+	        break;
+     case 6:logger.debug("enter the username");
+            String userName2=s.next();
+            logger.debug("enter the password");
+            String passWord=s.next();
+            String message=obj.adminLogin(userName2,passWord);
+            logger.debug(message);
+            break;
+	        default:logger.debug("invalid choice");
+            break;
+	 case 7:int usersid=obj.getUserId("aaron",3214567890L);
+		    int orderId1=obj.getOrderId(usersid);
+	        logger.debug(orderId1);
+	        break;
 	}
      }
 }

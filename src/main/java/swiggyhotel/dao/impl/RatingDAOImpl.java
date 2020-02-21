@@ -22,7 +22,7 @@ public class RatingDAOImpl implements RatingDAO {
 
 		String sqlQuery = "select * from ratings";
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement stmt = con.prepareStatement(sqlQuery)) {
-			try (ResultSet ro = stmt.executeQuery(sqlQuery)) {
+			try (ResultSet ro = stmt.executeQuery()) {
 
 				while (ro.next()) {
 					RatingDetails ob = new RatingDetails();
@@ -93,7 +93,10 @@ public class RatingDAOImpl implements RatingDAO {
 					c++;
 					list.add(ob);
 				}
-				float avg = sum / c;
+				float avg = 0;
+				if ( c != 0) {
+				 avg = sum / c;
+				}
 				logger.debug((int) avg);
 			}
 		}

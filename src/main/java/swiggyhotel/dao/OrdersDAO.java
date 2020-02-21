@@ -4,6 +4,7 @@ package swiggyhotel.dao;
 //import java.time.LocalDate;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import swiggyhotel.model.DbException;
 
@@ -16,9 +17,9 @@ public interface OrdersDAO {
 	
 	//public void getOrderDetails() throws Exception;
 	public void updateDeliveredDateAndStatus(int orderId) throws DbException;
-	public void calculateTotalAmts(int orderId) throws DbException;
+	public int calculateTotalAmts(int orderId) throws DbException;
 	public void updateTotalAmts(int orderId) throws DbException;
-	public void insertOrders(OrderDetails ob)throws DbException;
+	public int insertOrders(OrderDetails ob)throws DbException;
 	public void updateDeliveredDate(int orderId)throws DbException;
 	
 	

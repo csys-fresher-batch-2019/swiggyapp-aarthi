@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import swiggyhotel.LoggerUtil;
 
 import swiggyhotel.dao.MenusDAO;
 import swiggyhotel.model.DbException;
+import swiggyhotel.model.FoodDetails;
 import swiggyhotel.model.MenuDetails;
+import swiggyhotel.model.OrderItems;
 
 public class MenusDAOImpl implements MenusDAO{
 	public static final LoggerUtil logger=LoggerUtil.getInstance();
@@ -25,7 +28,7 @@ public class MenusDAOImpl implements MenusDAO{
 	    String sql1="select * from menus";
 	    try(Connection con=ConnectionUtil.getConnection();PreparedStatement stmt=con.prepareStatement(sql1)){
 		
-	    try(ResultSet ro1=stmt.executeQuery(sql1)){
+	    try(ResultSet ro1=stmt.executeQuery()){
 		
 		while(ro1.next())
 		{   
@@ -50,7 +53,7 @@ public class MenusDAOImpl implements MenusDAO{
 		String sql1="select category from menus";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement stmt=con.prepareStatement(sql1)){
 		
-		try(ResultSet ro1=stmt.executeQuery(sql1)){
+		try(ResultSet ro1=stmt.executeQuery()){
 		//List<FoodDetails> l=new ArrayList<FoodDetails>();
 		while(ro1.next())
 		{   
@@ -70,28 +73,7 @@ public class MenusDAOImpl implements MenusDAO{
 	
 	}
 
-	/*public void getItemNameAndPrice() throws Exception {
-		String sql1="select item_name,price from foodstuff_items";
-		try(Connection con=ConnectionUtil.getConnection();PreparedStatement stmt=con.prepareStatement(sql1);){
-		
-		try(ResultSet ro1=stmt.executeQuery(sql1);){
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
-		while(ro1.next())
-		{   
-			//FoodDetails ob=new FoodDetails();
-			String name=ro1.getString("item_name");
-			System.out.println(name);
-			int cost=ro1.getInt("price");
-			System.out.println(cost);
-			
-		}
-		}
-		}
-		catch(Exception e)
-	    {
-	    	e.printStackTrace();
-	    }
-	}*/
+	
 
 	public void getItemNameAndPrice(String itemName) throws DbException {
 		
@@ -120,4 +102,86 @@ public class MenusDAOImpl implements MenusDAO{
 		
 	}
 
-}
+	@Override
+	public List<FoodDetails> getFoods() throws DbException {
+		 List<FoodDetails> l=new ArrayList<FoodDetails>();
+			String sql="select f.item_id,f.item_name,f.food_type,f.price,f.images from foodstuff_items f,menus m where f.menu_id=m.menu_id and  m.menu_id=1";
+			try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)) {
+			try(ResultSet ro=pst.executeQuery()){
+			while(ro.next())
+			{   
+				FoodDetails ob=new FoodDetails();
+				ob.itemId=ro.getInt("item_id");
+				ob.itemName=ro.getString("item_name");
+				ob.foodType=ro.getString("food_type");
+			    ob.price=ro.getInt("price");
+				
+				ob.images=ro.getString("images");
+				l.add(ob);
+	        }
+			}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return l;
+	}
+
+	@Override
+	public List<FoodDetails> getSnacksAndShakes() throws DbException {
+		 List<FoodDetails> l=new ArrayList<FoodDetails>();
+			String sql="select f.item_id,f.item_name,f.food_type,f.price,f.images from foodstuff_items f,menus m where f.menu_id=m.menu_id and m.menu_id=2";
+			try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)) {
+			try(ResultSet ro=pst.executeQuery()){
+			while(ro.next())
+			{   
+				FoodDetails ob=new FoodDetails();
+				ob.itemId=ro.getInt("item_id");
+				ob.itemName=ro.getString("item_name");
+				ob.foodType=ro.getString("food_type");
+			    ob.price=ro.getInt("price");
+				
+				ob.images=ro.getString("images");
+				l.add(ob);
+	        }
+			}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return l;
+		
+	}
+
+	@Override
+	public List<FoodDetails> getDesserts() throws DbException {
+		 List<FoodDetails> l=new ArrayList<FoodDetails>();
+			String sql="select f.item_id,f.item_name,f.food_type,f.price,f.images from foodstuff_items f,menus m where f.menu_id=m.menu_id and m.menu_id=3";
+			try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)) {
+			try(ResultSet ro=pst.executeQuery()){
+			while(ro.next())
+			{   
+				FoodDetails ob=new FoodDetails();
+				ob.itemId=ro.getInt("item_id");
+				ob.itemName=ro.getString("item_name");
+				ob.foodType=ro.getString("food_type");
+			    ob.price=ro.getInt("price");
+				
+				ob.images=ro.getString("images");
+				l.add(ob);
+	        }
+			}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return l;
+	}
+
+	
+	}
+
+

@@ -2,6 +2,7 @@ package swiggyhotel.model;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class OrderItemDetails {
 	
@@ -11,12 +12,11 @@ public class OrderItemDetails {
 	public int quantity;
 	public int totalAmounts;
 	public String status;
-	public Date orderDate;
+	public LocalDateTime orderDate;
 	@Override
 	public String toString() {
 		return "OrderItemDetails [orderItemId=" + orderItemId + ", orderId=" + orderId + ", itemId=" + itemId
-				+ ", quantity=" + quantity + ", totalAmounts=" + totalAmounts + ", status=" + status + ", orderDate="
-				+ orderDate + "]";
+				+ ", quantity=" + quantity + ", totalAmounts=" + totalAmounts + ", status=" + status + "]";
 	}
 
 }

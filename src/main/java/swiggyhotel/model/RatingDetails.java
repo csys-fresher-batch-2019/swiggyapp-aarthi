@@ -4,13 +4,14 @@ public class RatingDetails {
     public int userId;
     public int itemId;
     public String itemName;
+    public int ratingPoints;
 	public String getItemName() {
 		return itemName;
 	}
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public int ratingPoints;
+	
 	
 	public void setUserId(int userId)
 	{

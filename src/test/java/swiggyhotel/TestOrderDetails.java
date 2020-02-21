@@ -28,8 +28,7 @@ public class TestOrderDetails {
 		switch(choice)
 		{
 		    case 1:
-		    	   logger.debug("enter the orderid");
-		           obj.orderId=s.nextInt();
+		    	   
 		           logger.debug("enter the userid");
 		           obj.userId=s.nextInt();
 		           //logger.debug("enter the ordereddate");
@@ -44,17 +43,14 @@ public class TestOrderDetails {
 		            Long time1=d1.getTime();
 		            Timestamp ts1=new Timestamp(time1);*/
 		           obj.orderedDate=orderTime;
-		            obj.approxDeliveryTime =approxDeliveryTime; 
-		           logger.debug("enter the totalamts");
-		           obj.totalAmts=s.nextInt();
-		           logger.debug("enter the afterdiscount");
-		           obj.afterDiscount=s.nextInt();
+		           obj.approxDeliveryTime =approxDeliveryTime; 
 		           ob.insertOrders(obj);
 		           break;
 		    case 2:
 		    	   logger.debug("enter the orderid");
 		    	   int orderId1=s.nextInt();
-	               ob.calculateTotalAmts(orderId1);
+	               int amt=ob.calculateTotalAmts(orderId1);
+	               logger.debug(amt);
 	               break;
 		    case 3:
 		    	   logger.debug("enter the orderid");

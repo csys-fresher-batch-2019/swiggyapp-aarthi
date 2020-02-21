@@ -14,30 +14,31 @@ public class TestFoodDetails {
 	public static void main(String[] args) throws Exception {
 		FoodItemsDAO ob=DAOFactory.getFoodItemsDAO();
 		Scanner s=new Scanner(System.in);
-		logger.debug("1.InsertFoods\n2.UpdateMenuId\n3.FindAll\n4.GetFoodDetails\n5.GetFoodsDetailsBySearchName\n");
+		logger.debug("1.InsertFoods\n2.UpdateMenuId\n3.FindAll\n4.GetFoodDetails\n5.GetFoodsDetailsBySearchName\n6.deleteFoods\n");
 		logger.debug("\nEnter the choice");
 		int choice=s.nextInt();
 		switch(choice)
 		{
 		    case 1:
-		    	logger.debug("enter the itemId");
-				int itemId=s.nextInt();
-				s.nextLine();
-				logger.debug("enter the itemName");
-				String itemName=s.nextLine();
+		    	logger.debug("enter the itemName");
+				String itemName=s.next();
 				logger.debug("enter the foodType");
 				String foodType=s.next();
 				s.nextLine();
 				logger.debug("enter the price");
 				int price=s.nextInt();
-		    	ob.insertItems(itemId,itemName,foodType,price,"");
+				logger.debug("enter the menuid");
+				int menuId=s.nextInt();
+				logger.debug("enter the images");
+				String images=s.next();
+		    	ob.insertItems(itemName,foodType,price,menuId,images);
 		    break;
 		    case 2:
 		    	logger.debug("enter the menuId");
-				int menuId=s.nextInt();
+				int menuId1=s.nextInt();
 				logger.debug("enter the itemName");
 				String itemname=s.next();
-			    ob.updateMenuId(menuId,itemname);
+			    ob.updateMenuId(menuId1,itemname);
 		    break;
 		    case 3:List<FoodDetails> l=new ArrayList<FoodDetails>();
 		           //FoodDetails ob=new FoodDetails();
@@ -61,6 +62,11 @@ public class TestFoodDetails {
 				 logger.debug(foodDetails.toString());
 			}
 	    break;
+		    case 6:
+		    	logger.debug("enter the itemname");
+			    String itemName1=s.next();
+		    	ob.deleteFoods(itemName1);
+		    break;
 		    
 		    default:logger.debug("invalid choice");
 		    break;

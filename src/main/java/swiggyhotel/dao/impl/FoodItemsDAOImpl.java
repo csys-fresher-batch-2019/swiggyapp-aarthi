@@ -58,7 +58,7 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
         List<FoodDetails> l=new ArrayList<FoodDetails>();
 		String sql="select * from foodstuff_items";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)) {
-		try(ResultSet ro=pst.executeQuery(sql)){
+		try(ResultSet ro=pst.executeQuery()){
 		while(ro.next())
 		{   
 			FoodDetails ob=new FoodDetails();
@@ -91,7 +91,7 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		pst.setString(2, itemName);
 		
 	    //logger.debug(sqlQuery);
-		int row1=pst.executeUpdate(sqlQuery);
+		int row1=pst.executeUpdate();
 		logger.info(row1+"row updated");
 		}
 		catch (Exception e) {
@@ -103,18 +103,19 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 
 	
 
-	public void insertItems(int itemId,String itemName,String foodType,int price,String images) throws DbException {
-		String sqlQuery="insert into foodstuff_items(item_id,item_name,food_type,price,images)values(?,?,?,?,?)";
+	public void insertItems(String itemName,String foodType,int price,int menuId,String images) throws DbException {
+		String sqlQuery="insert into foodstuff_items(item_id,item_name,food_type,price,menu_id,images)values(item_id.nextval,?,?,?,?,?)";
 		
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)) {
-		pst.setInt(1, itemId);
-		pst.setString(2, itemName);
-		pst.setString(3, foodType);
-		pst.setInt(4,price);
+		//pst.setInt(1, itemId);
+		pst.setString(1, itemName);
+		pst.setString(2, foodType);
+		pst.setInt(3,price);
+		pst.setInt(4,menuId);
 		pst.setString(5,images);
 		
 		logger.debug(sqlQuery);
-		int row=pst.executeUpdate(sqlQuery);
+		int row=pst.executeUpdate();
 		logger.info(row+"row inserted");
 		}
 		catch (Exception e) {
@@ -125,9 +126,9 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 	{
 		String sql1="select item_name,price from foodstuff_items where food_type=?";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1)) {
-		
-		try(ResultSet ro1=pst.executeQuery(sql1)){
-	      pst.setString(1,foodType);
+			 pst.setString(1,foodType);
+		try(ResultSet ro1=pst.executeQuery()){
+	     
 		while(ro1.next())
 		{   
 			
@@ -143,42 +144,21 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 			e.printStackTrace();
 		}
 	}
-	/*public void getItemName(int menuId) throws Exception
-	{
-		String sql1="select item_name from foodstuff_items where menu_id=?";
-		
-		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1);) {
-		
-		try(ResultSet ro1=pst.executeQuery(sql1);){
-	    pst.setInt(1,menuId);
-		while(ro1.next())
-		{   
-			
-			String name=ro1.getString("item_name");
-			System.out.println(name);
-			
-		}
-		}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-	}*/
+	
 	public List<FoodDetails> getFoodsDetailsBySearchName(String searchname) throws DbException
 	{  
 
 
 		List<FoodDetails> l1=new ArrayList<FoodDetails>();
-		String sql="select * from foodstuff_items where item_name like ? or food_type like ?";
+		String sql="select * from foodstuff_items where item_name like ?";
 		
 		try (Connection con =ConnectionUtil.getConnection();PreparedStatement pst =con.prepareStatement(sql)){
 		
-		
-		try(ResultSet ro=pst.executeQuery(sql)){
+			pst.setString(1,"%"+searchname+"%");
+		try(ResultSet ro=pst.executeQuery()){
 			
-		pst.setString(1,"%"+searchname+"%");
-		pst.setString(2,"%"+searchname+"%");
+		
+		
 		
 		while(ro.next())
 		{   
@@ -228,6 +208,28 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 			}
 		}
 	}*/
+
+
+
+
+
+	@Override
+	public void deleteFoods(String itemName) throws DbException {
+    String sqlQuery="delete from foodstuff_items where item_name=?";
+		
+		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)) {
+		//pst.setInt(1, itemId);
+		pst.setString(1, itemName);
+		
+		logger.debug(sqlQuery);
+		int row=pst.executeUpdate();
+		logger.info(row+"row deleted");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
 
 }
 	

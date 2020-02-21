@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.OrderItemDAO;
 import swiggyhotel.model.DbException;
 import swiggyhotel.model.OrderItemDetails;
+import swiggyhotel.model.OrderItems;
 import swiggyhotel.model.UserDetails;
 
 //import java.util.ArrayList;
@@ -79,7 +82,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 		
 		
-		try(ResultSet ro=pst.executeQuery(sql)){
+		try(ResultSet ro=pst.executeQuery()){
 		//List<FoodDetails> l=new ArrayList<FoodDetails>();
 		while(ro.next())
 		{   
@@ -91,7 +94,7 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 			ob.quantity=ro.getInt("quantity");
 		    ob.totalAmounts=ro.getInt("total_amounts");
 		    ob.status=ro.getString("status");
-		    ob.orderDate=ro.getDate("order_date");
+		    ob.orderDate=LocalDateTime.parse("order_date");
 			l.add(ob);
 		}
 		}
@@ -105,5 +108,34 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		
 		
 		//return null;
+	}
+
+
+
+	public void insertorderitems(OrderItemDetails ab) throws DbException {
+		String sql="insert into order_items(order_item_id,order_id,item_id,quantity,total_amounts,order_date)values(order_item_id.nextval,?,?,?,?,?)" ; 
+		//List<OrderItemDetails> list=new ArrayList<OrderItemDetails>(); 
+		try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql)){
+	    
+		
+		 //Date rd=Date.valueOf(orderDate);
+		 //Date rd1=Date.valueOf(deliverDate);
+		 //pst.setInt(1,obj.orderId);
+		 pst.setInt(1,ab.orderId);
+		 pst.setInt(2,ab.itemId);
+		 pst.setInt(3,ab.quantity);
+		 pst.setInt(4,ab.totalAmounts);
+		 pst.setTimestamp(5,Timestamp.valueOf(ab.orderDate));
+		 //list.add(ab);
+		 int row1=pst.executeUpdate();
+		
+		 logger.info(row1+"row inserted");
+		 
+		 }
+		 catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		//return list;		
 	}
 }
