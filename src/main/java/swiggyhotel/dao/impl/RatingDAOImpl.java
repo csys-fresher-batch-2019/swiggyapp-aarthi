@@ -64,20 +64,20 @@ public class RatingDAOImpl implements RatingDAO {
 		float avg = 0;
 		int rate=0;
 		for (RatingDetails ratingDetails : ratings) {
-			sum = sum+  ratingDetails.ratingPoints;
+			sum = sum+  ratingDetails.getRatingPoints();
 		}
 		if (! ratings.isEmpty()) {
 		   avg = (float)(sum / ratings.size());
 		   rate=(int)avg;
 		}
-		//logger.debug(avg);
+		
 		return rate;
 	}
 	
 	public List<RatingDetails> getRatings(String itemName) throws DbException {
 		int sum = 0, c = 0;
 
-		String query = "select f.item_id, f.item_name, r.rating_points from ratings r,foodstuff_items f where f.item_id=r.item_id and item_name=? order by r.created_date desc";
+		String query = "select r.user_id,f.item_id, f.item_name, r.rating_points from ratings r,foodstuff_items f where f.item_id=r.item_id and item_name=? order by r.created_date desc";
 		List<RatingDetails> list = new ArrayList<>();
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(query);) {
 
@@ -86,10 +86,11 @@ public class RatingDAOImpl implements RatingDAO {
 				
 				while (ro1.next()) {
 					RatingDetails ob = new RatingDetails();
+					ob.setUserId(ro1.getInt("user_id"));
 					ob.setItemId(ro1.getInt("item_id"));
 					ob.setItemName(ro1.getString("item_name"));
-					ob.ratingPoints = ro1.getInt("rating_points");
-					sum = sum + ob.ratingPoints;
+					ob.setRatingPoints(ro1.getInt("rating_points"));
+					sum = sum + ob.getRatingPoints();
 					c++;
 					list.add(ob);
 				}

@@ -23,7 +23,7 @@ import swiggyhotel.model.OrderItems;
 public class MenusDAOImpl implements MenusDAO{
 	public static final LoggerUtil logger=LoggerUtil.getInstance();
 
-	    public List<MenuDetails> FindAll() throws DbException {
+	    public List<MenuDetails> findAll() throws DbException {
 	    List<MenuDetails> l=new ArrayList<MenuDetails>();
 	    String sql1="select * from menus";
 	    try(Connection con=ConnectionUtil.getConnection();PreparedStatement stmt=con.prepareStatement(sql1)){
@@ -33,9 +33,9 @@ public class MenusDAOImpl implements MenusDAO{
 		while(ro1.next())
 		{   
 			MenuDetails ob=new MenuDetails();
-			ob.menuId=ro1.getInt("menu_id");
+			ob.setMenuId(ro1.getInt("menu_id"));
 			
-			ob.category=ro1.getString("category");
+			ob.setCategory(ro1.getString("category"));
 			
 			l.add(ob);
 		}
@@ -75,7 +75,7 @@ public class MenusDAOImpl implements MenusDAO{
 
 	public void getItemNameAndPrice(String itemName) throws DbException {
 		
-		//Statement stmt=con.createStatement();
+		
 		String sql1="select item_name,price from foodstuff_items where item_name like ?";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1)){
 			pst.setString(1, "%"+itemName+"%");
@@ -84,7 +84,7 @@ public class MenusDAOImpl implements MenusDAO{
 		
 		while(rs.next())
 		{
-			//UserDetails ob1=new UserDetails();
+		
 		    String itemName1=rs.getString("item_name");
 		    logger.debug(itemName1);
 		    String price1=rs.getString("price");
@@ -109,12 +109,12 @@ public class MenusDAOImpl implements MenusDAO{
 			while(ro.next())
 			{   
 				FoodDetails ob=new FoodDetails();
-				ob.itemId=ro.getInt("item_id");
-				ob.itemName=ro.getString("item_name");
-				ob.foodType=ro.getString("food_type");
-			    ob.price=ro.getInt("price");
+				ob.setItemId(ro.getInt("item_id"));
+				ob.setItemName(ro.getString("item_name"));
+				ob.setFoodType(ro.getString("food_type"));
+			    ob.setPrice(ro.getInt("price"));
 				
-				ob.images=ro.getString("images");
+				ob.setImages(ro.getString("images"));
 				l.add(ob);
 	        }
 			}
@@ -135,12 +135,12 @@ public class MenusDAOImpl implements MenusDAO{
 			while(ro.next())
 			{   
 				FoodDetails ob=new FoodDetails();
-				ob.itemId=ro.getInt("item_id");
-				ob.itemName=ro.getString("item_name");
-				ob.foodType=ro.getString("food_type");
-			    ob.price=ro.getInt("price");
+				ob.setItemId(ro.getInt("item_id"));
+				ob.setItemName(ro.getString("item_name"));
+				ob.setFoodType(ro.getString("food_type"));
+			    ob.setPrice(ro.getInt("price"));
 				
-				ob.images=ro.getString("images");
+				ob.setImages(ro.getString("images"));
 				l.add(ob);
 	        }
 			}
@@ -162,12 +162,12 @@ public class MenusDAOImpl implements MenusDAO{
 			while(ro.next())
 			{   
 				FoodDetails ob=new FoodDetails();
-				ob.itemId=ro.getInt("item_id");
-				ob.itemName=ro.getString("item_name");
-				ob.foodType=ro.getString("food_type");
-			    ob.price=ro.getInt("price");
+				ob.setItemId(ro.getInt("item_id"));
+				ob.setItemName(ro.getString("item_name"));
+				ob.setFoodType(ro.getString("food_type"));
+			    ob.setPrice(ro.getInt("price"));
 				
-				ob.images=ro.getString("images");
+				ob.setImages(ro.getString("images"));
 				l.add(ob);
 	        }
 			}

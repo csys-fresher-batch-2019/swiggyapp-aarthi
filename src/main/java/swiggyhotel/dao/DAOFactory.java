@@ -1,6 +1,4 @@
 package swiggyhotel.dao;
-
-
 import swiggyhotel.dao.impl.DiscountDAOImpl;
 import swiggyhotel.dao.impl.FoodItemsDAOImpl;
 import swiggyhotel.dao.impl.MenusDAOImpl;
@@ -8,8 +6,8 @@ import swiggyhotel.dao.impl.OrderItemDAOImpl;
 import swiggyhotel.dao.impl.OrdersDAOImpl;
 import swiggyhotel.dao.impl.RatingDAOImpl;
 import swiggyhotel.dao.impl.UsersDAOImpl;
-
-public class DAOFactory {
+public class DAOFactory 
+ {
 	public static DiscountDAO getDiscountDAO()
 	{
 		DiscountDAO d=new DiscountDAOImpl();
@@ -45,8 +43,4 @@ public class DAOFactory {
 		UsersDAO u=new UsersDAOImpl();
 		return u;
 	}
-
-
-
-
-}
+ }

@@ -22,42 +22,7 @@ import swiggyhotel.model.UserDetails;
 
 public class OrderItemDAOImpl implements OrderItemDAO {
 	public static final LoggerUtil logger=LoggerUtil.getInstance();
-	/*public void getOrderIdAndQuantity(int orderId) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();
-		String sql1="select order_id,sum(quantity) as quantity from order_items where order_id='"+orderId+"' group by order_id";
-		ResultSet ro1=stmt.executeQuery(sql1);
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
-		if(ro1.next())
-		{   
-			//FoodDetails ob=new FoodDetails();
-			int id=ro1.getInt("order_id");
-			System.out.println(id);
-			int qty=ro1.getInt("quantity");
-			System.out.println(qty);
-			
-		}
-	}*/
-		
 	
-
-	/*public void getOrderIdAndStatus(int orderItemId) throws Exception {
-		Connection con=ConnectionUtil.getConnection();
-		Statement stmt=con.createStatement();
-		String sql1="select order_id,status from order_items where order_item_id='"+orderItemId+"'";
-		ResultSet ro1=stmt.executeQuery(sql1);
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
-		while(ro1.next())
-		{   
-			//FoodDetails ob=new FoodDetails();
-			int id=ro1.getInt("order_id");
-			System.out.println(id);
-			String status=ro1.getString("status");
-			System.out.println(status);
-	}
-		
-		
-	}*/
 
 	public void updateStatus(int orderId,String comments) throws DbException {
 		try(Connection con=ConnectionUtil.getConnection();CallableStatement cstmt=con.prepareCall("{call procedure1(?,?)}")){
@@ -83,18 +48,19 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		
 		
 		try(ResultSet ro=pst.executeQuery()){
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
+	
 		while(ro.next())
 		{   
-			//FoodDetails ob=new FoodDetails();
+			
 			OrderItemDetails ob=new OrderItemDetails();
-			ob.orderItemId=ro.getInt("order_item_id");
-			ob.orderId=ro.getInt("order_id");
-			ob.itemId=ro.getInt("item_id");
-			ob.quantity=ro.getInt("quantity");
-		    ob.totalAmounts=ro.getInt("total_amounts");
-		    ob.status=ro.getString("status");
-		    ob.orderDate=LocalDateTime.parse("order_date");
+			ob.setOrderItemId(ro.getInt("order_item_id"));
+			ob.setOrderId(ro.getInt("order_id"));
+			ob.setItemId(ro.getInt("item_id"));
+			ob.setQuantity(ro.getInt("quantity"));
+		    ob.setTotalAmounts(ro.getInt("total_amounts"));
+		    ob.setStatus(ro.getString("status"));
+		    ob.setOrderDate((ro.getTimestamp("order_date").toLocalDateTime()));
+		   //ob.orderDate=LocalDateTime.parse("order_date");
 			l.add(ob);
 		}
 		}
@@ -107,26 +73,24 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		return(l);
 		
 		
-		//return null;
+		
 	}
 
 
 
 	public void insertorderitems(OrderItemDetails ab) throws DbException {
 		String sql="insert into order_items(order_item_id,order_id,item_id,quantity,total_amounts,order_date)values(order_item_id.nextval,?,?,?,?,?)" ; 
-		//List<OrderItemDetails> list=new ArrayList<OrderItemDetails>(); 
+		
 		try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql)){
 	    
 		
-		 //Date rd=Date.valueOf(orderDate);
-		 //Date rd1=Date.valueOf(deliverDate);
-		 //pst.setInt(1,obj.orderId);
-		 pst.setInt(1,ab.orderId);
-		 pst.setInt(2,ab.itemId);
-		 pst.setInt(3,ab.quantity);
-		 pst.setInt(4,ab.totalAmounts);
-		 pst.setTimestamp(5,Timestamp.valueOf(ab.orderDate));
-		 //list.add(ab);
+		 
+		 pst.setInt(1,ab.getOrderId());
+		 pst.setInt(2,ab.getItemId());
+		 pst.setInt(3,ab.getQuantity());
+		 pst.setInt(4,ab.getTotalAmounts());
+		 pst.setTimestamp(5,Timestamp.valueOf(ab.getOrderDate()));
+		 
 		 int row1=pst.executeUpdate();
 		
 		 logger.info(row1+"row inserted");
@@ -136,6 +100,6 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 			{
 				e.printStackTrace();
 			}
-		//return list;		
+				
 	}
 }

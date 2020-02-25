@@ -3,12 +3,62 @@ package swiggyhotel.model;
 import java.time.LocalDateTime;
 
 public class ItemList {
-	public int orderId;
-	public int itemId;
-	public int quantity;
-	public int totalAmount;
-	public String status;
-	public LocalDateTime orderedDate;
+	
+	private int orderId;
+	private int itemId;
+	private int quantity;
+	private int totalAmount;
+	private String status;
+	private LocalDateTime orderedDate;
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public int getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(int totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public LocalDateTime getOrderedDate() {
+		return orderedDate;
+	}
+
+	public void setOrderedDate(LocalDateTime orderedDate) {
+		this.orderedDate = orderedDate;
+	}
+
+	
 	
 	@Override
 	public String toString() {

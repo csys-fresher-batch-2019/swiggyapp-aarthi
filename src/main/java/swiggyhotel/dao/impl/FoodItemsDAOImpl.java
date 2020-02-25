@@ -35,12 +35,12 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		while(ro.next())
 		{   
 			FoodDetails ob=new FoodDetails();
-			ob.itemId=ro.getInt("item_id");
-			ob.itemName=ro.getString("item_name");
-			ob.foodType=ro.getString("food_type");
-		    ob.price=ro.getInt("price");
-			ob.menuId=ro.getInt("menu_id");
-			ob.images=ro.getString("images");
+			ob.setItemId(ro.getInt("item_id"));
+			ob.setItemName(ro.getString("item_name"));
+			ob.setFoodType(ro.getString("food_type"));
+		    ob.setPrice(ro.getInt("price"));
+			ob.setMenuId(ro.getInt("menu_id"));
+			ob.setImages(ro.getString("images"));
 			l.add(ob);
         }
 		}
@@ -63,7 +63,7 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		pst.setInt(1, menuId);
 		pst.setString(2, itemName);
 		
-	    //logger.debug(sqlQuery);
+	    
 		int row1=pst.executeUpdate();
 		logger.info(row1+"row updated");
 		}
@@ -80,7 +80,7 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		String sqlQuery="insert into foodstuff_items(item_id,item_name,food_type,price,menu_id,images)values(item_id.nextval,?,?,?,?,?)";
 		
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)) {
-		//pst.setInt(1, itemId);
+		
 		pst.setString(1, itemName);
 		pst.setString(2, foodType);
 		pst.setInt(3,price);
@@ -136,12 +136,12 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		while(ro.next())
 		{   
 			FoodDetails ob=new FoodDetails();
-			ob.itemId=ro.getInt("item_id");
-			ob.itemName=ro.getString("item_name");
-			ob.foodType=ro.getString("food_type");
-		    ob.price=ro.getInt("price");
-			ob.menuId=ro.getInt("menu_id");
-			ob.images=ro.getString("images");
+			ob.setItemId(ro.getInt("item_id"));
+			ob.setItemName(ro.getString("item_name"));
+			ob.setFoodType(ro.getString("food_type"));
+		    ob.setPrice(ro.getInt("price"));
+			ob.setMenuId(ro.getInt("menu_id"));
+			ob.setImages(ro.getString("images"));
 			l1.add(ob);
         }
 		}
@@ -152,37 +152,16 @@ public class FoodItemsDAOImpl implements FoodItemsDAO {
 		
 		return l1;
 	}
-	/*public void deleteItemId(int itemId) throws Exception
+	
+	@Override
+	public String toUpp(String word)throws DbException
 	{
-		Connection con = null;
-		PreparedStatement pst = null;	   
-	    try {
-		    con=ConnectionUtil.getConnection();
-		 //stmt=con.createStatement();
-	    String sqlQuery="delete from foodstuff_items where item_id=?";
-		pst=con.prepareStatement(sqlQuery);
-		pst.setInt(1,itemId);
-		int row=pst.executeUpdate();
-		System.out.println(row);
-		System.out.print(sqlQuery);
-		
-		 //System.out.print(row1);
-		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally {
-			if (pst != null ) {
-				pst.close();
-			}
-			if ( con != null) {
-				con.close();
-			}
-		}
-	}*/
+	String first=word.substring(0,1);
+	  String f_after=word.substring(1);
+	  String res=first.toUpperCase()+f_after;
 
-
+	return(res);
+	}
 
 
 

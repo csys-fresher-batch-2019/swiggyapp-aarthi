@@ -2,22 +2,68 @@ package swiggyhotel.model;
 
 public class UserDetails {
 	
-	public int userId;
-	public String userName;
-	public Long phoneNo;
-	public String address;
-	public String city;
-	
+	private int userId;
+	private String userName;
+	private Long phoneNo;
+	private String address;
+	private String city;
+	public int getUserId() {
+		return userId;
+	}
 
-	
-	/*public UserDetails(int userId, String userName, Long phoneNo, String address, String city) {
+
+
+	public void setUserId(int userId) {
 		this.userId = userId;
-		this.userName = userName;
-		this.phoneNo = phoneNo;
-		this.address = address;
-		this.city = city;
-	}*/
+	}
 
+
+
+	public String getUserName() {
+		return userName;
+	}
+
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+
+	public Long getPhoneNo() {
+		return phoneNo;
+	}
+
+
+
+	public void setPhoneNo(Long phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
 
 	@Override
 	public String toString() {

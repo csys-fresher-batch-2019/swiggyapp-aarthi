@@ -24,10 +24,10 @@ public class OrdersDAOImpl implements OrdersDAO {
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1)){
 		
 		try(ResultSet ro1=pst.executeQuery()){
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
+		
 		while(ro1.next())
 		{   
-			//FoodDetails ob=new FoodDetails();
+			
 			int id=ro1.getInt("order_id");
 			logger.debug(id);
 			int userId=ro1.getInt("user_id");
@@ -87,9 +87,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 	}
 
 	public void updateTotalAmts(int orderId) throws DbException {
-		
-		//ResultSet ro=stmt.executeQuery(sql);
-	    String sql="update orders set total_amt = ( select sum(total_amounts)as amounts from order_items  where order_id=?)  where order_id =?" ; 
+		String sql="update orders set total_amt = ( select sum(total_amounts)as amounts from order_items  where order_id=?)  where order_id =?" ; 
 	    try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 	    	pst.setInt(1,orderId);
 	    	pst.setInt(2,orderId);
@@ -126,14 +124,12 @@ public class OrdersDAOImpl implements OrdersDAO {
 		System.out.println("ORderID=" + orderId);
 		 String sql="insert into orders(order_id,user_id,ordered_date,approxDeliveryTime)values(?,?,?,?)" ; 
 		 try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql)){
-	     //Date rd=Date.valueOf(orderDate);
-		 //Date rd1=Date.valueOf(deliverDate);
-		 //pst.setInt(1,obj.orderId);
+	     
 		pst.setInt(1, orderId);
-		 pst.setInt(2,obj.userId);
-		 pst.setTimestamp(3,Timestamp.valueOf(obj.orderedDate));
-		 //pst.setString(4, "ordered");
-		 pst.setTimestamp(4,Timestamp.valueOf(obj.approxDeliveryTime));
+		 pst.setInt(2,obj.getUserId());
+		 pst.setTimestamp(3,Timestamp.valueOf(obj.getOrderedDate()));
+		 
+		 pst.setTimestamp(4,Timestamp.valueOf(obj.getApproxDeliveryTime()));
 		 int row1=pst.executeUpdate();
 		 logger.info(row1+"row inserted");
 		 }
@@ -157,12 +153,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 	    	 s=rs.getTimestamp("ordered_date")+" ";
 	    	 logger.debug(s);
 	    	 
-	    	/*String a[]=s.split("\\s");
-	    	 String x=a[0];
-	    	 String y=a[1];
-	    	 String b[]=y.split(":");
-	    	 String z=b[0];
-	    	 int x1=Integer.parseInt(z);*/
+	    	
 	    	 
 	    	 
 	     }
@@ -172,12 +163,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 			{
 				e.printStackTrace();
 			}
-	   /*String sql1="update orders set delivered_date=to_char(to_date(?, 'YYYY-MM-DD HH:MI:SS pm') + 1/24, 'YYYY-MM-DD HH:MI:SS pm') where order_id=?";
-	    PreparedStatement pst1=con.prepareStatement(sql1);
-	    pst1.setString(1, s);
-	    pst1.setInt(2,orderId);
-	    int row1=pst1.executeUpdate();
-	    System.out.print(row1+"row inserted");*/
+	   
 	     
 	}
 

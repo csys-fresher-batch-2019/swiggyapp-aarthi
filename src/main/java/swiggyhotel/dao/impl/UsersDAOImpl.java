@@ -24,16 +24,16 @@ public class UsersDAOImpl implements UsersDAO{
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 		
 		try(ResultSet ro=pst.executeQuery()){
-		//List<FoodDetails> l=new ArrayList<FoodDetails>();
+		
 		while(ro.next())
 		{   
-			//FoodDetails ob=new FoodDetails();
+			
 			UserDetails ob=new UserDetails();
-			ob.userId=ro.getInt("user_id");
-			ob.userName=ro.getString("user_name");
-			ob.phoneNo=ro.getLong("phone_No");
-			ob.address=ro.getString("address");
-		    ob.city=ro.getString("city");
+			ob.setUserId(ro.getInt("user_id"));
+			ob.setUserName(ro.getString("user_name"));
+			ob.setPhoneNo(ro.getLong("phone_No"));
+			ob.setAddress(ro.getString("address"));
+		    ob.setCity(ro.getString("city"));
 			l.add(ob);
 		}
 		}
@@ -46,7 +46,7 @@ public class UsersDAOImpl implements UsersDAO{
 		return(l);
 	}
 
-	public HashMap<String, Integer> getNameAndtotalAmts(int orderId) throws DbException {
+	public HashMap<String, Integer> getNameAndTotalAmts(int orderId) throws DbException {
 		HashMap<String,Integer> map = new HashMap<String, Integer>();
 		String sqlQuery="select user_name,total_amt from users u,orders o where u.user_id=o.user_id and order_id=?";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)){
@@ -69,30 +69,7 @@ public class UsersDAOImpl implements UsersDAO{
 		return map;
 	}
 
-	/*public List<String> getNames(String city) throws DbException {
-		List<String> l1=new ArrayList<String>();
-		String sql="select user_name from users where city=?";
-		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
-			pst.setString(1,city);
-		try(ResultSet rs=pst.executeQuery()){
-		
-		while(rs.next())
-		{
-			//UserDetails ob1=new UserDetails();
-		    String userName=rs.getString("user_name");
-		    l1.add(userName);
-		}
-		}
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-		return(l1);
-		
-	}*/
-
+	
 	public String login(String name,Long phoneno) throws DbException {
 		String message=" ";
 		String sql="select user_name,phone_no from users where user_name=? and phone_no=?";
@@ -102,7 +79,7 @@ public class UsersDAOImpl implements UsersDAO{
 			try(ResultSet rs=pst.executeQuery()){
 			
 		
-		//boolean a=true;
+		
 		
 		
 		if(rs.next())
@@ -113,7 +90,7 @@ public class UsersDAOImpl implements UsersDAO{
 		{
 			message="Login Failure";
 		}
-		//return message;
+		
 	    }
 		}
 		catch(Exception e)
@@ -128,11 +105,11 @@ public class UsersDAOImpl implements UsersDAO{
 		
 		String sql="insert into users(user_id,user_name,phone_no,address,city) values(user_id_seq.nextval,?,?,?,?)";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
-		//pst.setInt(1,ob.userId);
-		pst.setString(1,ob.userName);
-		pst.setLong(2,ob.phoneNo);
-		pst.setString(3,ob.address);
-		pst.setString(4,ob.city);
+		
+		pst.setString(1,ob.getUserName());
+		pst.setLong(2,ob.getPhoneNo());
+		pst.setString(3,ob.getAddress());
+		pst.setString(4,ob.getCity());
 		int row=pst.executeUpdate();
 		logger.info(row+"row inserted");
 		}
