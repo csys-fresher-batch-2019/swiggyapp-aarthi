@@ -2,7 +2,6 @@ package swiggyhotel.dao;
 import java.util.List;
 import swiggyhotel.model.DbException;
 import swiggyhotel.model.ItemList;
-
 public interface DiscountDAO 
   {
     public int calculateDiscountAmt(int orderId) throws DbException;

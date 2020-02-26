@@ -64,7 +64,7 @@ public class TestUserDetails
                      String message=obj.adminLogin(userName2,passWord);
                      logger.debug(message);
                      break;
-	          case 7:int userId1=obj.getUserId("aaron",3214567890L);
+	          case 7:int userId1=obj.getUserId("Aarthi",9234567890L);
 		             int orderId1=obj.getOrderId(userId1);
 	                 logger.debug(orderId1);
 	                 break;

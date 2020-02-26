@@ -36,8 +36,8 @@ public class TestFoodDetails
 				   String itemName1=s.next();
 			       ob.updateMenuId(menuId1,itemName1);
 		           break;
-		    case 3:List<FoodDetails> l=new ArrayList<FoodDetails>();
-		           l= ob.findAll();
+		    case 3:List<FoodDetails> l=ob.findAll();
+		           //l= ob.findAll();
 		           for(FoodDetails foodDetails : l)
 		           {
 					  logger.debug(foodDetails);

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 import swiggyhotel.dao.DAOFactory;
 import swiggyhotel.dao.RatingDAO;
-import swiggyhotel.model.DbException;
 import swiggyhotel.model.RatingDetails;
 public class TestRatingPoints 
 {
@@ -40,6 +39,7 @@ public class TestRatingPoints
             case 3:logger.debug("Enter the itemname");
 		           String itemName=s.next();
 		           int rating=obj.getItemRatings(itemName);
+		           logger.debug(rating);
 		           break;
 		    case 4:List<RatingDetails> list = new ArrayList<RatingDetails>();
 			       logger.debug("Enter the itemname");

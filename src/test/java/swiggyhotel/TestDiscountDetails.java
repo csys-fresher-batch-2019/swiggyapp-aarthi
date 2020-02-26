@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 import swiggyhotel.dao.DAOFactory;
 import swiggyhotel.dao.DiscountDAO;
-import swiggyhotel.model.DbException;
-import swiggyhotel.model.FoodDetails;
 import swiggyhotel.model.ItemList;
-import swiggyhotel.model.ItemNames;
 public class TestDiscountDetails 
 {
 	public static final LoggerUtil logger=LoggerUtil.getInstance();
@@ -37,7 +34,6 @@ public class TestDiscountDetails
 			       break;
             case 4:logger.debug("Enter the itemid");
                    int itemId=s.nextInt();
-                  // List<ItemNames> list=new ArrayList<ItemNames>();
                    String name=ob.getItemName(itemId);
                    logger.debug(name);
                    break;

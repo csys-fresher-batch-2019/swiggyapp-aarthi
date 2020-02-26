@@ -13,58 +13,43 @@ public class ItemList {
 	public int getOrderId() {
 		return orderId;
 	}
-
-	public void setOrderId(int orderId) {
+    public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-
-	public int getItemId() {
+    public int getItemId() {
 		return itemId;
 	}
-
-	public void setItemId(int itemId) {
+    public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-
-	public int getQuantity() {
+    public int getQuantity() {
 		return quantity;
 	}
-
-	public void setQuantity(int quantity) {
+    public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 
 	public int getTotalAmount() {
 		return totalAmount;
 	}
-
-	public void setTotalAmount(int totalAmount) {
+    public void setTotalAmount(int totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-
-	public String getStatus() {
+    public String getStatus() {
 		return status;
 	}
-
-	public void setStatus(String status) {
+    public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public LocalDateTime getOrderedDate() {
+    public LocalDateTime getOrderedDate() {
 		return orderedDate;
 	}
-
-	public void setOrderedDate(LocalDateTime orderedDate) {
+    public void setOrderedDate(LocalDateTime orderedDate) {
 		this.orderedDate = orderedDate;
 	}
-
-	
-	
-	@Override
+    @Override
 	public String toString() {
 		return "ItemList [orderId=" + orderId + ", itemId=" + itemId + ", quantity=" + quantity + ", totalAmount="
 				+ totalAmount + ", status=" + status + ", orderedDate=" + orderedDate + "]";
 	}
-	
-
 }

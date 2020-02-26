@@ -1,33 +1,22 @@
 package swiggyhotel.dao.impl;
-
 import java.sql.Connection;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.ArrayList;
-
 import swiggyhotel.ConnectionUtil;
 import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.OrdersDAO;
 import swiggyhotel.model.DbException;
 import swiggyhotel.model.OrderDetails;
-//import java.sql.Date;
 public class OrdersDAOImpl implements OrdersDAO {
 	public static final LoggerUtil logger=LoggerUtil.getInstance();
 	public void getOrderDetails() throws DbException {
 		String sql1="select * from orders";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1)){
-		
 		try(ResultSet ro1=pst.executeQuery()){
-		
 		while(ro1.next())
 		{   
-			
 			int id=ro1.getInt("order_id");
 			logger.debug(id);
 			int userId=ro1.getInt("user_id");
@@ -50,8 +39,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 			e.printStackTrace();
 		}
 	}
-
-	public void updateDeliveredDateAndStatus(int orderId) throws DbException {
+public void updateDeliveredDateAndStatus(int orderId) throws DbException {
 		String sqlQuery="update orders set delivered_date=systimestamp,status_info='delivered' where order_id=?";
 		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sqlQuery)){
 	     pst.setInt(1,orderId);
@@ -64,16 +52,14 @@ public class OrdersDAOImpl implements OrdersDAO {
 			e.printStackTrace();
 		}
 	}
-
-	public int calculateTotalAmts(int orderId) throws DbException {
-		
+public int calculateTotalAmts(int orderId) throws DbException {
 	   String sql="select sum(total_amounts) as amounts from order_items where order_id=?"; 
 	   int totalAmts=0;
 	   try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 		   pst.setInt(1,orderId);
-		try( ResultSet ro=pst.executeQuery()){
-	if(ro.next())
-		{   
+	   try( ResultSet ro=pst.executeQuery()){
+	   if(ro.next())
+		 {   
 			totalAmts=ro.getInt("amounts");
 			logger.debug(totalAmts);
 		}
@@ -85,8 +71,7 @@ public class OrdersDAOImpl implements OrdersDAO {
 		}
 	return totalAmts;
 	}
-
-	public void updateTotalAmts(int orderId) throws DbException {
+public void updateTotalAmts(int orderId) throws DbException {
 		String sql="update orders set total_amt = ( select sum(total_amounts)as amounts from order_items  where order_id=?)  where order_id =?" ; 
 	    try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 	    	pst.setInt(1,orderId);
@@ -99,31 +84,25 @@ public class OrdersDAOImpl implements OrdersDAO {
 		{
 			e.printStackTrace();
 		}
-		
 	}
-
-	public int getOrderId() {
+public int getOrderId() {
 		int orderId = 0;
-	
-		String sql = "select order_id.nextval as orderId from dual";
-		 try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql); ResultSet rs=  pst.executeQuery()){
+        String sql = "select order_id.nextval as orderId from dual";
+		try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql); ResultSet rs=  pst.executeQuery()){
 		    if(rs.next()) {
 		    	orderId = rs.getInt("orderId");
 		    }
-		 } catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
+		 } 
+		catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
-		 return orderId;
-		
+		return orderId;
 	}
-	public int insertOrders(OrderDetails obj) throws DbException {
+public int insertOrders(OrderDetails obj) throws DbException {
 		int orderId = getOrderId();
 		System.out.println("ORderID=" + orderId);
-		 String sql="insert into orders(order_id,user_id,ordered_date,approxDeliveryTime)values(?,?,?,?)" ; 
-		 try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql)){
+		String sql="insert into orders(order_id,user_id,ordered_date,approxDeliveryTime)values(?,?,?,?)" ; 
+		try(Connection con=ConnectionUtil.getConnection(); PreparedStatement pst=con.prepareStatement(sql)){
 	     
 		pst.setInt(1, orderId);
 		 pst.setInt(2,obj.getUserId());
@@ -145,33 +124,17 @@ public class OrdersDAOImpl implements OrdersDAO {
 		 try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql)){
 			 pst.setInt(1,orderId);
 	     try(ResultSet rs=pst.executeQuery()){
-	     
-	     
 	     String s=null;
 	     if(rs.next())
 	     {
 	    	 s=rs.getTimestamp("ordered_date")+" ";
 	    	 logger.debug(s);
-	    	 
-	    	
-	    	 
-	    	 
 	     }
 	     }
 		 }
 		 catch(Exception e)
-			{
+		  {
 				e.printStackTrace();
-			}
-	   
-	     
+		  }
 	}
-
-
-
-	
-
-	
-	
-
 }

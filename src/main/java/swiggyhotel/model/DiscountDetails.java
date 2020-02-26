@@ -3,7 +3,6 @@ public class DiscountDetails {
 	private int minvalue;
 	private int maxValue;
 	private int discountRate;
-	
 	public int getMinvalue() {
 		return minvalue;
 	}
@@ -22,12 +21,9 @@ public class DiscountDetails {
 	public void setDiscountRate(int discountRate) {
 		this.discountRate = discountRate;
 	}
-	
 	@Override
 	public String toString() {
 		return "DiscountDetails [minvalue=" + minvalue + ", maxValue=" + maxValue + ", discountRate=" + discountRate
 				+ "]";
 	}
-	
-
 }

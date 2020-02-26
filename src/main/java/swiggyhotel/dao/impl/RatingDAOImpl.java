@@ -1,39 +1,29 @@
 package swiggyhotel.dao.impl;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import swiggyhotel.ConnectionUtil;
 import swiggyhotel.LoggerUtil;
 import swiggyhotel.dao.RatingDAO;
 import swiggyhotel.model.DbException;
 import swiggyhotel.model.RatingDetails;
-
 public class RatingDAOImpl implements RatingDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
-
-	public List<RatingDetails> findAll() throws DbException {
+    public List<RatingDetails> findAll() throws DbException {
 		List<RatingDetails> l = new ArrayList<RatingDetails>();
-
 		String sqlQuery = "select * from ratings";
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement stmt = con.prepareStatement(sqlQuery)) {
 			try (ResultSet ro = stmt.executeQuery()) {
-
-				while (ro.next()) {
+            while (ro.next()) {
 					RatingDetails ob = new RatingDetails();
-
-					int a = ro.getInt("user_id");
+                    int a = ro.getInt("user_id");
 					ob.setUserId(a);
 					int b = ro.getInt("item_id");
 					ob.setItemId(b);
 					int c = ro.getInt("rating_points");
 					ob.setRatingPoints(c);
-
 					l.add(ob);
 				}
 			}
@@ -43,8 +33,7 @@ public class RatingDAOImpl implements RatingDAO {
 
 		return l;
 	}
-
-	public void insertRatings(RatingDetails ob) throws DbException {
+public void insertRatings(RatingDetails ob) throws DbException {
 		String sqlQuery = "insert into ratings(user_id,item_id,rating_points) values(?,?,?)";
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(sqlQuery)) {
 			pst.setInt(1, ob.getUserId());
@@ -56,9 +45,7 @@ public class RatingDAOImpl implements RatingDAO {
 			e.printStackTrace();
 		}
 	}
-
-	public int getItemRatings(String itemName) throws DbException {
-		
+public int getItemRatings(String itemName) throws DbException {
 		List<RatingDetails> ratings = getRatings(itemName);
 		int sum = 0;
 		float avg = 0;
@@ -70,21 +57,16 @@ public class RatingDAOImpl implements RatingDAO {
 		   avg = (float)(sum / ratings.size());
 		   rate=(int)avg;
 		}
-		
 		return rate;
 	}
-	
-	public List<RatingDetails> getRatings(String itemName) throws DbException {
+public List<RatingDetails> getRatings(String itemName) throws DbException {
 		int sum = 0, c = 0;
-
-		String query = "select r.user_id,f.item_id, f.item_name, r.rating_points from ratings r,foodstuff_items f where f.item_id=r.item_id and item_name=? order by r.created_date desc";
+        String query = "select r.user_id,f.item_id, f.item_name, r.rating_points from ratings r,foodstuff_items f where f.item_id=r.item_id and item_name=? order by r.created_date desc";
 		List<RatingDetails> list = new ArrayList<>();
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(query);) {
-
-			pst.setString(1, itemName);
+            pst.setString(1, itemName);
 			try (ResultSet ro1 = pst.executeQuery()) {
-				
-				while (ro1.next()) {
+			while (ro1.next()) {
 					RatingDetails ob = new RatingDetails();
 					ob.setUserId(ro1.getInt("user_id"));
 					ob.setItemId(ro1.getInt("item_id"));
@@ -105,8 +87,6 @@ public class RatingDAOImpl implements RatingDAO {
 		{
 			e.printStackTrace();
 		}
-		
 		return list;
 	}
-
 }

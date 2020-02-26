@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import swiggyhotel.dao.DAOFactory;
-import swiggyhotel.dao.FoodItemsDAO;
 import swiggyhotel.dao.MenusDAO;
 import swiggyhotel.model.FoodDetails;
 import swiggyhotel.model.MenuDetails;

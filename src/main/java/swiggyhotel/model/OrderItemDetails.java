@@ -1,9 +1,5 @@
 package swiggyhotel.model;
-
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 public class OrderItemDetails {
 	private int orderItemId;
 	private int orderId;
@@ -12,7 +8,6 @@ public class OrderItemDetails {
 	private int totalAmounts;
 	private String status;
 	private LocalDateTime orderDate;
-	
 	public int getOrderItemId() {
 		return orderItemId;
 	}
