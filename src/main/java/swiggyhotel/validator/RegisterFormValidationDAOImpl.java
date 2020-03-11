@@ -1,8 +1,8 @@
-package swiggyhotel.Validation;
+package swiggyhotel.validator;
 
-import swiggyhotel.Exception.ValidatorException;
 import swiggyhotel.dao.RegisterFormValidationDAO;
 import swiggyhotel.dbexception.DbException;
+import swiggyhotel.exception.ValidatorException;
 import swiggyhotel.model.UserDetails;
 import swiggyhotel.service.UserDetailsService;
 

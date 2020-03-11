@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.Exception.ValidatorException;
+import swiggyhotel.exception.ValidatorException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.RatingDetails;
 import swiggyhotel.service.RatingDetailsService;
@@ -14,7 +14,7 @@ public class TestRatingPoints {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		RatingPointValidationService rate=new RatingPointValidationService();
+		RatingPointValidationService rate = new RatingPointValidationService();
 		RatingDetailsService service = new RatingDetailsService();
 		RatingDetails ob = new RatingDetails();
 		Scanner s = new Scanner(System.in);
@@ -23,14 +23,14 @@ public class TestRatingPoints {
 		int choice = s.nextInt();
 		switch (choice) {
 		case 1:
-			boolean userId=true;
-			boolean itemId=true;
-			boolean ratingPoint=true;
+			boolean userId = true;
+			boolean itemId = true;
+			boolean ratingPoint = true;
 			logger.debug("Enter the userId");
 			int userId1 = s.nextInt();
 			ob.setUserId(userId1);
 			try {
-				 userId= rate.checkUserId(userId1);
+				userId = rate.checkUserId(userId1);
 			} catch (ValidatorException e) {
 				logger.error(e.getMessage());
 			}
@@ -50,9 +50,9 @@ public class TestRatingPoints {
 			} catch (ValidatorException e) {
 				logger.error(e.getMessage());
 			}
-			if(userId==true||itemId==true||ratingPoint==true) {
-			int value = service.insertRatings(ob);
-			logger.debug(value);
+			if (userId == true || itemId == true || ratingPoint == true) {
+				int value = service.insertRatings(ob);
+				logger.debug(value);
 			}
 			break;
 		case 2:

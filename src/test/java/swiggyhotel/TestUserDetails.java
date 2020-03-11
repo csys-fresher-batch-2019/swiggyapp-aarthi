@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.Exception.ValidatorException;
+import swiggyhotel.exception.ValidatorException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.UserDetails;
 import swiggyhotel.service.LoginFormValidationService;
@@ -81,9 +81,9 @@ public class TestUserDetails {
 			} catch (ValidatorException e) {
 				logger.error(e.getMessage());
 			}
-			if(userName1==true&&phoneNo2==true) {
-			String value1 = service.login(userName, phoneno);
-			logger.debug(value1);
+			if (userName1 == true && phoneNo2 == true) {
+				String value1 = service.login(userName, phoneno);
+				logger.debug(value1);
 			}
 			break;
 		case 4:

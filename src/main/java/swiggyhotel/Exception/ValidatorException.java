@@ -1,4 +1,4 @@
-package swiggyhotel.Exception;
+package swiggyhotel.exception;
 
 public class ValidatorException extends Exception {
 

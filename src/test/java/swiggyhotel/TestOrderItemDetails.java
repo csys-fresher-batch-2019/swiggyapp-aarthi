@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.Exception.ValidatorException;
+import swiggyhotel.exception.ValidatorException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.OrderItemDetails;
 import swiggyhotel.service.OrderItemDetailsService;
@@ -39,60 +39,48 @@ public class TestOrderItemDetails {
 			logger.debug(value);
 			break;
 		case 3:
-			boolean orderId1=true;
-			boolean itemId=true;
-			boolean quantity=true;
-			boolean totalAmt=true;
-			OrderItemValidationService orderItem=new OrderItemValidationService();
+			boolean orderId1 = true;
+			boolean itemId = true;
+			boolean quantity = true;
+			boolean totalAmt = true;
+			OrderItemValidationService orderItem = new OrderItemValidationService();
 			logger.debug("Enter the orderid");
-			int orderId3=s.nextInt();
+			int orderId3 = s.nextInt();
 			a.setOrderId(orderId3);
-			try
-			   {
-				 orderId1=orderItem.checkOrderId(orderId3); 
-			   }
-			   catch(ValidatorException e)
-			   {
-				   logger.error(e.getMessage());
-			   }
+			try {
+				orderId1 = orderItem.checkOrderId(orderId3);
+			} catch (ValidatorException e) {
+				logger.error(e.getMessage());
+			}
 			logger.debug("Enter the itemid");
-			int itemId3=s.nextInt();
+			int itemId3 = s.nextInt();
 			a.setItemId(itemId3);
-			try
-			   {
-				 itemId=orderItem.checkItemId(itemId3); 
-			   }
-			   catch(ValidatorException e)
-			   {
-				   logger.error(e.getMessage());
-			   }
+			try {
+				itemId = orderItem.checkItemId(itemId3);
+			} catch (ValidatorException e) {
+				logger.error(e.getMessage());
+			}
 			logger.debug("Enter the quantity");
-			int quantity1=s.nextInt();
+			int quantity1 = s.nextInt();
 			a.setQuantity(s.nextInt());
-			try
-			   {
-				 quantity=orderItem.checkQuantity(quantity1); 
-			   }
-			   catch(ValidatorException e)
-			   {
-				   logger.error(e.getMessage());
-			   }
+			try {
+				quantity = orderItem.checkQuantity(quantity1);
+			} catch (ValidatorException e) {
+				logger.error(e.getMessage());
+			}
 			logger.debug("Enter the totalamounts");
-			int totalAmt2=s.nextInt();
+			int totalAmt2 = s.nextInt();
 			a.setTotalAmounts(totalAmt2);
-			try
-			   {
-				 totalAmt=orderItem.checkTotalAmts(totalAmt2); 
-			   }
-			   catch(ValidatorException e)
-			   {
-				   logger.error(e.getMessage());
-			   }
+			try {
+				totalAmt = orderItem.checkTotalAmts(totalAmt2);
+			} catch (ValidatorException e) {
+				logger.error(e.getMessage());
+			}
 			LocalDateTime orderTime = LocalDateTime.now();
 			a.setOrderDate(orderTime);
-			if(orderId1==true||itemId==true||quantity==true||totalAmt==true) {
-			int value1 = service.insertorderitems(a);
-			logger.debug(value1);
+			if (orderId1 == true || itemId == true || quantity == true || totalAmt == true) {
+				int value1 = service.insertorderitems(a);
+				logger.debug(value1);
 			}
 			break;
 		default:

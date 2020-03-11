@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.DiscountDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.ItemList;
+import swiggyhotel.util.ConnectionUtil;
 
 public class DiscountDAOImpl implements DiscountDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();

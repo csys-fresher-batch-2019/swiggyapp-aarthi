@@ -6,12 +6,12 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.MenusDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.FoodDetails;
 import swiggyhotel.model.MenuDetails;
+import swiggyhotel.util.ConnectionUtil;
 
 public class MenusDAOImpl implements MenusDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();

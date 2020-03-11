@@ -1,7 +1,7 @@
-package swiggyhotel.Validation;
+package swiggyhotel.validator;
 
-import swiggyhotel.Exception.ValidatorException;
 import swiggyhotel.dao.LoginValidationDAO;
+import swiggyhotel.exception.ValidatorException;
 
 public class LoginFormValidationDAOImpl implements LoginValidationDAO {
 	public boolean checkName(String name) throws ValidatorException {

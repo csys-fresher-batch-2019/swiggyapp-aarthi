@@ -5,11 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.OrdersDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.OrderDetails;
+import swiggyhotel.util.ConnectionUtil;
 
 public class OrdersDAOImpl implements OrdersDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();

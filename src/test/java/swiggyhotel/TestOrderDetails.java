@@ -3,7 +3,7 @@ package swiggyhotel;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-import swiggyhotel.Exception.ValidatorException;
+import swiggyhotel.exception.ValidatorException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.OrderDetails;
 import swiggyhotel.service.OrderValidationService;
@@ -20,26 +20,24 @@ public class TestOrderDetails {
 		logger.debug("Enter the choice");
 		int choice = s.nextInt();
 		switch (choice) {
-		case 1: OrderValidationService order=new  OrderValidationService();
-	     	boolean  userId=true;
+		case 1:
+			OrderValidationService order = new OrderValidationService();
+			boolean userId = true;
 			logger.debug("Enter the userid");
-			int userId1=s.nextInt();
+			int userId1 = s.nextInt();
 			obj.setUserId(userId1);
-			try
-			   {
-				 userId=order.checkUserId(userId1); 
-			   }
-			   catch(ValidatorException e)
-			   {
-				   logger.error(e.getMessage());
-			   }
+			try {
+				userId = order.checkUserId(userId1);
+			} catch (ValidatorException e) {
+				logger.error(e.getMessage());
+			}
 			LocalDateTime orderTime = LocalDateTime.now();
 			LocalDateTime approxDeliveryTime = orderTime.plusHours(1);
 			obj.setOrderedDate(orderTime);
 			obj.setApproxDeliveryTime(approxDeliveryTime);
-			if(userId==true) {
-			int value = service.insertOrders(obj);
-			logger.debug(value);
+			if (userId == true) {
+				int value = service.insertOrders(obj);
+				logger.debug(value);
 			}
 			break;
 		case 2:

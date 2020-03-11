@@ -1,7 +1,7 @@
-package swiggyhotel.Validation;
+package swiggyhotel.validator;
 
-import swiggyhotel.Exception.ValidatorException;
 import swiggyhotel.dao.FoodValidationDAO;
+import swiggyhotel.exception.ValidatorException;
 
 public class FoodDetailsValidationDAOImpl implements FoodValidationDAO {
 	boolean msg = true;

@@ -1,7 +1,7 @@
 package swiggyhotel.dao;
 
-import swiggyhotel.Exception.ValidatorException;
 import swiggyhotel.dbexception.DbException;
+import swiggyhotel.exception.ValidatorException;
 
 public interface RegisterFormValidationDAO {
 	public boolean checkName(String name) throws ValidatorException;

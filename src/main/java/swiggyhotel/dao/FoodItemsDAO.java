@@ -7,7 +7,7 @@ import org.jdbi.v3.sqlobject.customizer.Bind;
 import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 
-import swiggyhotel.dao.Mapper.AllFoodItemsRowMapper;
+import swiggyhotel.dao.mapper.AllFoodItemsRowMapper;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.model.FoodDetails;
 

@@ -1,11 +1,5 @@
 package swiggyhotel.dao;
 
-import swiggyhotel.Validation.FoodDetailsValidationDAOImpl;
-import swiggyhotel.Validation.LoginFormValidationDAOImpl;
-import swiggyhotel.Validation.OrderDetailsValidationDAOImpl;
-import swiggyhotel.Validation.OrderItemDetailsValidatorDAOImpl;
-import swiggyhotel.Validation.RatingDetailsValidationDAOImpl;
-import swiggyhotel.Validation.RegisterFormValidationDAOImpl;
 import swiggyhotel.dao.impl.DiscountDAOImpl;
 import swiggyhotel.dao.impl.FoodItemsDAOImpl;
 import swiggyhotel.dao.impl.MenusDAOImpl;
@@ -13,6 +7,12 @@ import swiggyhotel.dao.impl.OrderItemDAOImpl;
 import swiggyhotel.dao.impl.OrdersDAOImpl;
 import swiggyhotel.dao.impl.RatingDAOImpl;
 import swiggyhotel.dao.impl.UsersDAOImpl;
+import swiggyhotel.validator.FoodDetailsValidationDAOImpl;
+import swiggyhotel.validator.LoginFormValidationDAOImpl;
+import swiggyhotel.validator.OrderDetailsValidationDAOImpl;
+import swiggyhotel.validator.OrderItemDetailsValidatorDAOImpl;
+import swiggyhotel.validator.RatingDetailsValidationDAOImpl;
+import swiggyhotel.validator.RegisterFormValidationDAOImpl;
 
 public class DAOFactory {
 	public static DiscountDAO getDiscountDAO() {

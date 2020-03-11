@@ -8,11 +8,11 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.OrderItemDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.OrderItemDetails;
+import swiggyhotel.util.ConnectionUtil;
 
 public class OrderItemDAOImpl implements OrderItemDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();

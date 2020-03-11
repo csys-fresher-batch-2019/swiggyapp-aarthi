@@ -1,4 +1,4 @@
-package swiggyhotel.dao.Mapper;
+package swiggyhotel.dao.mapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

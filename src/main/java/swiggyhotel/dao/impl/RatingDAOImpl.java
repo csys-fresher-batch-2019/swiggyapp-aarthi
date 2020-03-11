@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.RatingDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.RatingDetails;
+import swiggyhotel.util.ConnectionUtil;
 
 public class RatingDAOImpl implements RatingDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();

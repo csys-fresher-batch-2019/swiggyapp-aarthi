@@ -1,6 +1,6 @@
 package swiggyhotel.dao;
 
-import swiggyhotel.Exception.ValidatorException;
+import swiggyhotel.exception.ValidatorException;
 
 public interface FoodValidationDAO {
 	public boolean checkPrice(int price) throws ValidatorException;

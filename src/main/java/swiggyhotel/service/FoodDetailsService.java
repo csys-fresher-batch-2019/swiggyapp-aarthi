@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.jdbi.v3.core.Jdbi;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.FoodItemsDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.model.FoodDetails;
+import swiggyhotel.util.ConnectionUtil;
 
 public class FoodDetailsService {
 	private Jdbi jdbi = ConnectionUtil.getjdbi();

@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.UsersDAO;
 import swiggyhotel.dbexception.DbException;
 import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.UserDetails;
+import swiggyhotel.util.ConnectionUtil;
 
 public class UsersDAOImpl implements UsersDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
