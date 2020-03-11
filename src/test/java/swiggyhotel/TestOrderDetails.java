@@ -3,25 +3,27 @@ package swiggyhotel;
 import java.time.LocalDateTime;
 import java.util.Scanner;
 
-import swiggyhotel.exception.ValidatorException;
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.OrderDetails;
-import swiggyhotel.service.OrderValidationService;
-import swiggyhotel.service.OrdersService;
+import com.aarthi.swiggyhotel.exception.ValidatorException;
+import com.aarthi.swiggyhotel.model.Order;
+import com.aarthi.swiggyhotel.service.OrderService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+import com.aarthi.swiggyhotel.validator.OrderDetailValidator;
+
+
 
 public class TestOrderDetails {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		OrdersService service = new OrdersService();
-		OrderDetails obj = new OrderDetails();
+		OrderService service = new OrderService();
+		Order obj = new Order();
 		Scanner s = new Scanner(System.in);
 		logger.debug("1.InsertOrders\n2.CalculateTotalAmts\n3.UpdateTotalAmts\n4.UpdateDeliveredDateAndStatus\n");
 		logger.debug("Enter the choice");
 		int choice = s.nextInt();
 		switch (choice) {
 		case 1:
-			OrderValidationService order = new OrderValidationService();
+			OrderDetailValidator order = new OrderDetailValidator();
 			boolean userId = true;
 			logger.debug("Enter the userid");
 			int userId1 = s.nextInt();

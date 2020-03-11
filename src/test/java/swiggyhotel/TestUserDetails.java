@@ -5,22 +5,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.exception.ValidatorException;
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.UserDetails;
-import swiggyhotel.service.LoginFormValidationService;
-import swiggyhotel.service.RegisterFormValidationService;
-import swiggyhotel.service.UserDetailsService;
+import com.aarthi.swiggyhotel.exception.ValidatorException;
+import com.aarthi.swiggyhotel.model.User;
+import com.aarthi.swiggyhotel.service.UserService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+import com.aarthi.swiggyhotel.validator.LoginFormValidator;
+import com.aarthi.swiggyhotel.validator.RegisterFormValidator;
+
+
 
 public class TestUserDetails {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		UserDetails ob = new UserDetails();
-		UserDetailsService service = new UserDetailsService();
+		User ob = new User();
+		UserService service = new UserService();
 
-		RegisterFormValidationService register = new RegisterFormValidationService();
-		LoginFormValidationService login = new LoginFormValidationService();
+		RegisterFormValidator register = new RegisterFormValidator();
+		LoginFormValidator login = new LoginFormValidator();
 
 		Scanner s = new Scanner(System.in);
 		logger.debug(
@@ -29,9 +31,9 @@ public class TestUserDetails {
 		int choice = s.nextInt();
 		switch (choice) {
 		case 1:
-			List<UserDetails> l1 = new ArrayList<UserDetails>();
+			List<User> l1 = new ArrayList<User>();
 			l1 = service.displayUserDetails();
-			for (UserDetails userDetails : l1) {
+			for (User userDetails : l1) {
 				logger.debug(userDetails);
 			}
 			break;

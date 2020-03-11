@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.exception.ValidatorException;
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.FoodDetails;
-import swiggyhotel.service.FoodDetailsService;
-import swiggyhotel.service.FoodValidationService;
-import swiggyhotel.service.MenuDetailsService;
+import com.aarthi.swiggyhotel.exception.ValidatorException;
+import com.aarthi.swiggyhotel.model.FoodItem;
+import com.aarthi.swiggyhotel.service.FoodItemService;
+import com.aarthi.swiggyhotel.service.MenuService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+import com.aarthi.swiggyhotel.validator.FoodDetailValidator;
+
+
 
 public class TestFoodDetails {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		FoodDetailsService food = new FoodDetailsService();
-		MenuDetailsService menu = new MenuDetailsService();
-		FoodValidationService ob = new FoodValidationService();
+		FoodItemService food = new FoodItemService();
+		MenuService menu = new MenuService();
+		FoodDetailValidator ob = new FoodDetailValidator();
 		Scanner s = new Scanner(System.in);
 		logger.debug(
 				"1.InsertFoods\n2.UpdateMenuId\n3.FindAll\n4.GetFoodDetails\n5.GetFoodsDetailsBySearchName\n6.deleteFoods\n");
@@ -76,27 +78,27 @@ public class TestFoodDetails {
 			logger.debug(value1);
 			break;
 		case 3:
-			List<FoodDetails> l = food.findAll();
-			for (FoodDetails foodDetails : l) {
+			List<FoodItem> l = food.findAll();
+			for (FoodItem foodDetails : l) {
 				logger.debug(foodDetails);
 			}
 			break;
 		case 4:
 			logger.debug("Enter the foodType(V/NV/O)");
-			List<FoodDetails> l2 = new ArrayList<FoodDetails>();
+			List<FoodItem> l2 = new ArrayList<FoodItem>();
 			String foodType2 = s.next();
 			l2 = food.getFoodDetails(foodType2);
-			for (FoodDetails foodDetail : l2) {
+			for (FoodItem foodDetail : l2) {
 				logger.debug(foodDetail.displayItem());
 			}
 			break;
 		case 5:
-			List<FoodDetails> l1 = new ArrayList<FoodDetails>();
+			List<FoodItem> l1 = new ArrayList<FoodItem>();
 			logger.debug("Enter the searchname");
 			String searchName = s.next();
 			String word = menu.toUpp(searchName);
 			l1 = food.getFoodsDetailsBySearchName(word);
-			for (FoodDetails foodDetails : l1) {
+			for (FoodItem foodDetails : l1) {
 				logger.debug(foodDetails.display());
 			}
 			break;

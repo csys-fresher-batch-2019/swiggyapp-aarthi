@@ -5,19 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.exception.ValidatorException;
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.OrderItemDetails;
-import swiggyhotel.service.OrderItemDetailsService;
-import swiggyhotel.service.OrderItemValidationService;
+import com.aarthi.swiggyhotel.exception.ValidatorException;
+import com.aarthi.swiggyhotel.model.OrderItem;
+import com.aarthi.swiggyhotel.service.OrderItemService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+import com.aarthi.swiggyhotel.validator.OrderItemDetailValidator;
+
+
 
 public class TestOrderItemDetails {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		OrderItemDetailsService service = new OrderItemDetailsService();
-		OrderItemDetails a = new OrderItemDetails();
-		List<OrderItemDetails> l1 = new ArrayList<OrderItemDetails>();
+		OrderItemService service = new OrderItemService();
+		OrderItem a = new OrderItem();
+		List<OrderItem> l1 = new ArrayList<OrderItem>();
 		Scanner s = new Scanner(System.in);
 		logger.debug("1.FindAll\n2.UpdateStatus\n3.Insertorderitems\n");
 		logger.debug("Enter the choice");
@@ -25,7 +27,7 @@ public class TestOrderItemDetails {
 		switch (choice) {
 		case 1:
 			l1 = service.findAll();
-			for (OrderItemDetails orderItemDetails : l1) {
+			for (OrderItem orderItemDetails : l1) {
 				logger.debug(orderItemDetails);
 			}
 			break;
@@ -43,7 +45,7 @@ public class TestOrderItemDetails {
 			boolean itemId = true;
 			boolean quantity = true;
 			boolean totalAmt = true;
-			OrderItemValidationService orderItem = new OrderItemValidationService();
+			OrderItemDetailValidator orderItem = new OrderItemDetailValidator();
 			logger.debug("Enter the orderid");
 			int orderId3 = s.nextInt();
 			a.setOrderId(orderId3);

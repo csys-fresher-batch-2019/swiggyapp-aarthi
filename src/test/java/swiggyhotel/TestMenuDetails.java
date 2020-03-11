@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.FoodDetails;
-import swiggyhotel.model.MenuDetails;
-import swiggyhotel.service.MenuDetailsService;
+import com.aarthi.swiggyhotel.model.FoodItem;
+import com.aarthi.swiggyhotel.model.Menu;
+import com.aarthi.swiggyhotel.service.MenuService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+
 
 public class TestMenuDetails {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		MenuDetailsService service = new MenuDetailsService();
+		MenuService service = new MenuService();
 		Scanner s = new Scanner(System.in);
 		logger.debug(
 				"1.FindAll\n2.GetCategory\n3.GetItemNameAndPrice\n4.GetFoods\n5.GetSnacksAndShakes\n6.GetDesserts\n");
@@ -21,46 +22,46 @@ public class TestMenuDetails {
 		int choice = s.nextInt();
 		switch (choice) {
 		case 1:
-			List<MenuDetails> l = new ArrayList<MenuDetails>();
+			List<Menu> l = new ArrayList<Menu>();
 			l = service.findAll();
-			for (MenuDetails menuDetails : l) {
+			for (Menu menuDetails : l) {
 				logger.debug(menuDetails);
 			}
 			break;
 		case 2:
-			List<MenuDetails> list = service.getCategory();
-			for (MenuDetails menuDetails : list) {
+			List<Menu> list = service.getCategory();
+			for (Menu menuDetails : list) {
 				logger.debug(menuDetails);
 			}
 			break;
 		case 3:
 			logger.debug("enter the itemName");
 			String itemName = s.next();
-			List<FoodDetails> l4 = service.getItemNameAndPrice(itemName);
-			for (FoodDetails foodDetails : l4) {
+			List<FoodItem> l4 = service.getItemNameAndPrice(itemName);
+			for (FoodItem foodDetails : l4) {
 				logger.debug(foodDetails);
 			}
 			break;
 		case 4:
-			List<FoodDetails> l1 = new ArrayList<FoodDetails>();
+			List<FoodItem> l1 = new ArrayList<FoodItem>();
 			l1 = service.getFoods();
-			for (FoodDetails food : l1) {
+			for (FoodItem food : l1) {
 				logger.debug(
 						food.getItemId() + " " + food.getItemName() + " " + food.getFoodType() + " " + food.getPrice());
 			}
 			break;
 		case 5:
-			List<FoodDetails> l2 = new ArrayList<FoodDetails>();
+			List<FoodItem> l2 = new ArrayList<FoodItem>();
 			l2 = service.getSnacksAndShakes();
-			for (FoodDetails snacks : l2) {
+			for (FoodItem snacks : l2) {
 				logger.debug(snacks.getItemId() + " " + snacks.getItemName() + " " + snacks.getFoodType() + " "
 						+ snacks.getPrice());
 			}
 			break;
 		case 6:
-			List<FoodDetails> l3 = new ArrayList<FoodDetails>();
+			List<FoodItem> l3 = new ArrayList<FoodItem>();
 			l3 = service.getDesserts();
-			for (FoodDetails desserts : l3) {
+			for (FoodItem desserts : l3) {
 				logger.debug(
 						desserts.getItemId() + desserts.getItemName() + desserts.getFoodType() + desserts.getPrice());
 			}

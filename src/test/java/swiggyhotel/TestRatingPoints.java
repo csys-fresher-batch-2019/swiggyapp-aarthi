@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.exception.ValidatorException;
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.RatingDetails;
-import swiggyhotel.service.RatingDetailsService;
-import swiggyhotel.service.RatingPointValidationService;
+import com.aarthi.swiggyhotel.exception.ValidatorException;
+import com.aarthi.swiggyhotel.model.RatingPoint;
+import com.aarthi.swiggyhotel.service.RatingPointService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+import com.aarthi.swiggyhotel.validator.RatingPointDetailValidator;
+
+
 
 public class TestRatingPoints {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		RatingPointValidationService rate = new RatingPointValidationService();
-		RatingDetailsService service = new RatingDetailsService();
-		RatingDetails ob = new RatingDetails();
+		RatingPointDetailValidator rate = new RatingPointDetailValidator();
+		RatingPointService service = new RatingPointService();
+		RatingPoint ob = new RatingPoint();
 		Scanner s = new Scanner(System.in);
 		logger.debug("1.InsertRatings\n2.FindAll\n3.GetRatings\n4.GetItemRatings\n");
 		logger.debug("Enter the choice");
@@ -56,9 +58,9 @@ public class TestRatingPoints {
 			}
 			break;
 		case 2:
-			List<RatingDetails> l = new ArrayList<RatingDetails>();
+			List<RatingPoint> l = new ArrayList<RatingPoint>();
 			l = service.findAll();
-			for (RatingDetails ratingDetails : l) {
+			for (RatingPoint ratingDetails : l) {
 				logger.debug(ratingDetails);
 			}
 			break;
@@ -69,11 +71,11 @@ public class TestRatingPoints {
 			logger.debug(rating);
 			break;
 		case 4:
-			List<RatingDetails> list = new ArrayList<RatingDetails>();
+			List<RatingPoint> list = new ArrayList<RatingPoint>();
 			logger.debug("Enter the itemname");
 			String itemName1 = s.next();
 			list = service.getRatings(itemName1);
-			for (RatingDetails ratingDetails : list) {
+			for (RatingPoint ratingDetails : list) {
 				logger.debug(ratingDetails);
 			}
 			break;

@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import swiggyhotel.logger.LoggerUtil;
-import swiggyhotel.model.ItemList;
-import swiggyhotel.service.DiscountDetailsService;
+import com.aarthi.swiggyhotel.dto.Item;
+import com.aarthi.swiggyhotel.service.DiscountService;
+import com.aarthi.swiggyhotel.util.LoggerUtil;
+
 
 public class TestDiscountDetails {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
 
 	public static void main(String[] args) throws Exception {
-		DiscountDetailsService service = new DiscountDetailsService();
+		DiscountService service = new DiscountService();
 		Scanner s = new Scanner(System.in);
 		logger.debug("1.CalculateDiscountAmt\n2.UpdateDiscountAmt\n3.GetItemList\n4.GetItemNames\n");
 		logger.debug("Enter the choice");
@@ -31,7 +32,7 @@ public class TestDiscountDetails {
 			logger.debug(value);
 			break;
 		case 3:
-			List<ItemList> l1 = new ArrayList<ItemList>();
+			List<Item> l1 = new ArrayList<Item>();
 			logger.debug("Enter the itemid");
 			int orderId4 = s.nextInt();
 			l1 = service.getItemList(orderId4);
