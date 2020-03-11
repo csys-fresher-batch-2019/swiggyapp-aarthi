@@ -1,16 +1,25 @@
 package swiggyhotel.dao;
+
 import java.util.HashMap;
 import java.util.List;
-import swiggyhotel.model.DbException;
+
+import swiggyhotel.dbexception.DbException;
 import swiggyhotel.model.UserDetails;
-public interface UsersDAO
- {
-	public List<UserDetails> displayUserDetails() throws DbException;
-	public HashMap<String, Integer> getNameAndTotalAmts(int orderId) throws DbException;
-	public void insertUserInfo(UserDetails ob)throws DbException;
-	public String login(String name,Long phoneno)throws DbException;
-	public int getUserId(String name,Long phoneno)throws DbException;
-	public String adminLogin(String userName,String passWord)throws DbException;
-	public int getOrderId(int userId)throws DbException;
- }
-	
+
+public interface UsersDAO {
+	public List<UserDetails> findAll() throws DbException;
+
+	public HashMap<String, Integer> findByNameAndTotalAmt(int orderId) throws DbException;
+
+	public int save(UserDetails ob) throws DbException;
+
+	public String findByNameAndPhoneNo(String name, Long phoneno) throws DbException;
+
+	public int findUserId(String name, Long phoneno) throws DbException;
+
+	public String findByNameAndPassWord(String userName, String passWord) throws DbException;
+
+	public int findOrderId(int userId) throws DbException;
+
+	public int ValidNumber(Long phoneNo) throws DbException;
+}

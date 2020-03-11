@@ -1,18 +1,22 @@
 package swiggyhotel.dao.impl;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import swiggyhotel.ConnectionUtil;
-import swiggyhotel.LoggerUtil;
+
+import swiggyhotel.Util.ConnectionUtil;
 import swiggyhotel.dao.DiscountDAO;
-import swiggyhotel.model.DbException;
+import swiggyhotel.dbexception.DbException;
+import swiggyhotel.logger.LoggerUtil;
 import swiggyhotel.model.ItemList;
+
 public class DiscountDAOImpl implements DiscountDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
-    public int calculateDiscountAmt(int orderId) throws DbException {
-        float discount = 0;
+
+	public int findDiscount(int orderId) throws DbException {
+		float discount = 0;
 		int discountAmt = 0;
 		String sql = "select total_amt from orders where order_id=?";
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
@@ -24,37 +28,38 @@ public class DiscountDAOImpl implements DiscountDAO {
 				}
 				if (amt >= 100 && amt <= 999) {
 					discount = (float) (amt * .10);
-				} 
-				else if (amt >= 1000 && amt <= 1999) {
+				} else if (amt >= 1000 && amt <= 1999) {
 					discount = (float) (amt * .25);
 				} else {
 					discount = (float) (amt * .50);
 				}
-                discountAmt = amt - (int) discount;
+				discountAmt = amt - (int) discount;
 			}
-		}
-        catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return discountAmt;
-     }
-public void updateDiscountAmt(int orderId) throws DbException {
-		int discount = calculateDiscountAmt(orderId);
+	}
+
+	public int updateDiscount(int orderId) throws DbException {
+		int discount = findDiscount(orderId);
+		int rows = 0;
 		String sql = "update orders set after_discount=?  where order_id=?";
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
 			pst.setInt(1, discount);
 			pst.setInt(2, orderId);
-			int rows = pst.executeUpdate();
+			rows = pst.executeUpdate();
 			logger.info(rows + "row updated");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return rows;
 	}
-@Override
-public List<ItemList> getItemList(int orderId) throws DbException {
+
+	@Override
+	public List<ItemList> findByOrderId(int orderId) throws DbException {
 		String sql = "select order_id,item_id,quantity,total_amounts,status,order_date from order_items where order_id=?";
-        List<ItemList> list = new ArrayList<ItemList>();
+		List<ItemList> list = new ArrayList<ItemList>();
 		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(sql)) {
 			pst.setInt(1, orderId);
 			try (ResultSet ro = pst.executeQuery()) {
@@ -70,27 +75,24 @@ public List<ItemList> getItemList(int orderId) throws DbException {
 
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return list;
+		return list;
 	}
-@Override
-public String getItemName(int itemId) throws DbException {
-		String sql1="select item_name from foodstuff_items where item_id=? ";
-		String itemName=null;
-		try(Connection con=ConnectionUtil.getConnection();PreparedStatement pst=con.prepareStatement(sql1)){
-		pst.setInt(1,itemId);
-		  try(ResultSet ro1=pst.executeQuery()){
-			 if(ro1.next())
-		       {   
-			      itemName=ro1.getString("item_name");
-		       }
-		    }
-		}
-		catch(Exception e)
-		{
+
+	@Override
+	public String findItemName(int itemId) throws DbException {
+		String sql1 = "select item_name from foodstuff_items where item_id=? ";
+		String itemName = null;
+		try (Connection con = ConnectionUtil.getConnection(); PreparedStatement pst = con.prepareStatement(sql1)) {
+			pst.setInt(1, itemId);
+			try (ResultSet ro1 = pst.executeQuery()) {
+				if (ro1.next()) {
+					itemName = ro1.getString("item_name");
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return itemName;

@@ -1,4 +1,5 @@
 package swiggyhotel.model;
+
 public class FoodDetails {
 	private int itemId;
 	private String itemName;
@@ -6,45 +7,68 @@ public class FoodDetails {
 	private int price;
 	private int menuId;
 	private String images;
-    public int getItemId() {
+
+	public int getItemId() {
 		return itemId;
 	}
-    public void setItemId(int itemId) {
+
+	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
-    public String getItemName() {
+
+	public String getItemName() {
 		return itemName;
 	}
-    public void setItemName(String itemName) {
+
+	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-    public String getFoodType() {
+
+	public String getFoodType() {
 		return foodType;
 	}
-    public void setFoodType(String foodType) {
+
+	public void setFoodType(String foodType) {
 		this.foodType = foodType;
 	}
-    public int getPrice() {
+
+	public int getPrice() {
 		return price;
 	}
-    public void setPrice(int price) {
+
+	public void setPrice(int price) {
 		this.price = price;
 	}
-    public int getMenuId() {
+
+	public int getMenuId() {
 		return menuId;
 	}
-    public void setMenuId(int menuId) {
+
+	public void setMenuId(int menuId) {
 		this.menuId = menuId;
 	}
-    public String getImages() {
+
+	public String getImages() {
 		return images;
 	}
-    public void setImages(String images) {
+
+	public void setImages(String images) {
 		this.images = images;
 	}
-    @Override
+
+	@Override
 	public String toString() {
 		return "FoodDetails [itemId=" + itemId + ", itemName=" + itemName + ", foodType=" + foodType + ", price="
 				+ price + ", menuId=" + menuId + "]";
 	}
+
+	public String display() {
+		return "FoodDetails [images=" + images + ",itemId=" + itemId + ",itemName=" + itemName + ", foodType="
+				+ foodType + ", price=" + price + "]";
+	}
+
+	public String displayItem() {
+		return "FoodDetails [itemName=" + itemName + ", price=" + price + "]";
+	}
+
 }

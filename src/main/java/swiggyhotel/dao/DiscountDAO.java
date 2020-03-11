@@ -1,11 +1,17 @@
 package swiggyhotel.dao;
+
 import java.util.List;
-import swiggyhotel.model.DbException;
+
+import swiggyhotel.dbexception.DbException;
 import swiggyhotel.model.ItemList;
-public interface DiscountDAO 
-  {
-    public int calculateDiscountAmt(int orderId) throws DbException;
-	public void updateDiscountAmt(int orderId) throws DbException;
-	public List<ItemList> getItemList(int orderId) throws DbException;
-	public String getItemName(int itemId)throws DbException;
-  }
+
+public interface DiscountDAO {
+
+	public int findDiscount(int orderId) throws DbException;
+
+	public int updateDiscount(int orderId) throws DbException;
+
+	public List<ItemList> findByOrderId(int orderId) throws DbException;
+
+	public String findItemName(int itemId) throws DbException;
+}

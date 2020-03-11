@@ -1,14 +1,23 @@
 package swiggyhotel.dao;
+
 import java.util.List;
-import swiggyhotel.model.DbException;
+
+import swiggyhotel.dbexception.DbException;
 import swiggyhotel.model.FoodDetails;
 import swiggyhotel.model.MenuDetails;
-public interface MenusDAO 
- {
+
+public interface MenusDAO {
 	public List<MenuDetails> findAll() throws DbException;
-	public void getCategory() throws DbException;
-	public List<FoodDetails> getFoods() throws DbException;
-	public List<FoodDetails> getSnacksAndShakes() throws DbException;
-	public List<FoodDetails> getDesserts() throws DbException;
-    public void getItemNameAndPrice(String itemName)throws DbException;
- }
+
+	public List<MenuDetails> findCategory() throws DbException;
+
+	public List<FoodDetails> findFoods() throws DbException;
+
+	public List<FoodDetails> findSnacksAndShakes() throws DbException;
+
+	public List<FoodDetails> findDesserts() throws DbException;
+
+	public List<FoodDetails> findByItemName(String itemName) throws DbException;
+
+	public String toUpp(String word) throws DbException;
+}
