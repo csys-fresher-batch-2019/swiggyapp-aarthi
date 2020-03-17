@@ -1,13 +1,15 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.aarthi.swiggyhotel.dao.MenuDAO;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.model.FoodItem;
 import com.aarthi.swiggyhotel.model.Menu;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
@@ -30,8 +32,12 @@ public class MenuDAOImpl implements MenuDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return l;
 	}
@@ -48,8 +54,12 @@ public class MenuDAOImpl implements MenuDAO {
 
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return l3;
 	}
@@ -67,8 +77,12 @@ public class MenuDAOImpl implements MenuDAO {
 					l4.add(obj);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return l4;
 	}
@@ -89,8 +103,12 @@ public class MenuDAOImpl implements MenuDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 
 		return l;
@@ -112,8 +130,12 @@ public class MenuDAOImpl implements MenuDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return l;
 	}
@@ -134,8 +156,12 @@ public class MenuDAOImpl implements MenuDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return l;
 	}

@@ -1,18 +1,18 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.aarthi.swiggyhotel.dao.DiscountDAO;
 import com.aarthi.swiggyhotel.dto.Item;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
 import com.aarthi.swiggyhotel.util.LoggerUtil;
-
-
 
 public class DiscountDAOImpl implements DiscountDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
@@ -37,9 +37,14 @@ public class DiscountDAOImpl implements DiscountDAO {
 				}
 				discountAmt = amt - (int) discount;
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
+
 		return discountAmt;
 	}
 
@@ -52,8 +57,13 @@ public class DiscountDAOImpl implements DiscountDAO {
 			pst.setInt(2, orderId);
 			rows = pst.executeUpdate();
 			logger.info(rows + "row updated");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_UPDATE);
+		}
+		catch (DbException e) {
+			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return rows;
 	}
@@ -77,8 +87,12 @@ public class DiscountDAOImpl implements DiscountDAO {
 
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return list;
 	}
@@ -94,8 +108,12 @@ public class DiscountDAOImpl implements DiscountDAO {
 					itemName = ro1.getString("item_name");
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return itemName;
 	}

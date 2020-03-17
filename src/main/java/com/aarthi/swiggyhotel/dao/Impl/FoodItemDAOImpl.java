@@ -1,18 +1,18 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.aarthi.swiggyhotel.dao.FoodItemDAO;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.model.FoodItem;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
 import com.aarthi.swiggyhotel.util.LoggerUtil;
-
-
 
 public class FoodItemDAOImpl implements FoodItemDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
@@ -33,8 +33,12 @@ public class FoodItemDAOImpl implements FoodItemDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return l;
 	}
@@ -47,8 +51,12 @@ public class FoodItemDAOImpl implements FoodItemDAO {
 			pst.setString(2, itemName);
 			row1 = pst.executeUpdate();
 			logger.info(row1 + "row updated");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_UPDATE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return row1;
 	}
@@ -65,8 +73,12 @@ public class FoodItemDAOImpl implements FoodItemDAO {
 			logger.debug(sqlQuery);
 			row = pst.executeUpdate();
 			logger.info(row + "row inserted");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SAVE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return row;
 	}
@@ -84,8 +96,12 @@ public class FoodItemDAOImpl implements FoodItemDAO {
 					list.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return list;
 	}
@@ -107,8 +123,12 @@ public class FoodItemDAOImpl implements FoodItemDAO {
 					l1.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 
 		return l1;
@@ -122,8 +142,12 @@ public class FoodItemDAOImpl implements FoodItemDAO {
 			logger.debug(sqlQuery);
 			row = pst.executeUpdate();
 			logger.info(row + "row deleted");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_DELETE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return row;
 	}

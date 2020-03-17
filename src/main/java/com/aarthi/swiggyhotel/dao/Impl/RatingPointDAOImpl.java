@@ -1,18 +1,18 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.aarthi.swiggyhotel.dao.RatingPointDAO;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.model.RatingPoint;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
 import com.aarthi.swiggyhotel.util.LoggerUtil;
-
-
 
 public class RatingPointDAOImpl implements RatingPointDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
@@ -33,8 +33,12 @@ public class RatingPointDAOImpl implements RatingPointDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 
 		return l;
@@ -49,8 +53,12 @@ public class RatingPointDAOImpl implements RatingPointDAO {
 			pst.setInt(3, ob.getRatingPoint());
 			row = pst.executeUpdate();
 			logger.info(row + "row inserted");
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SAVE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return row;
 	}
@@ -93,8 +101,12 @@ public class RatingPointDAOImpl implements RatingPointDAO {
 				}
 				logger.debug((int) avg);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return list;
 	}

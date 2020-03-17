@@ -1,15 +1,17 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.aarthi.swiggyhotel.dao.OrderItemDAO;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.model.OrderItem;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
 import com.aarthi.swiggyhotel.util.LoggerUtil;
@@ -30,8 +32,13 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 			result = cstmt.getString(3);
 			logger.debug(result);
 			logger.debug(row);
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_UPDATE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return result;
 	}
@@ -53,8 +60,13 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return (l);
 	}
@@ -71,8 +83,13 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 			row1 = pst.executeUpdate();
 			logger.info(row1 + "row inserted");
 
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SAVE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return row1;
 	}

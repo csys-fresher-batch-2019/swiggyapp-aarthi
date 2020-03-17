@@ -1,18 +1,19 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import com.aarthi.swiggyhotel.dao.UserDAO;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.model.User;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
 import com.aarthi.swiggyhotel.util.LoggerUtil;
-
 
 public class UserDAOImpl implements UserDAO {
 	public static final LoggerUtil logger = LoggerUtil.getInstance();
@@ -32,8 +33,12 @@ public class UserDAOImpl implements UserDAO {
 					l.add(ob);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return (l);
 	}
@@ -50,8 +55,12 @@ public class UserDAOImpl implements UserDAO {
 					map.put(username, totalAmount);
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return map;
 	}
@@ -69,8 +78,12 @@ public class UserDAOImpl implements UserDAO {
 					message = "Login Failure";
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return message;
 	}
@@ -85,11 +98,14 @@ public class UserDAOImpl implements UserDAO {
 			pst.setString(4, ob.getCity());
 			row = pst.executeUpdate();
 			logger.info(row + "row inserted");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SAVE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 		return row;
 	}
 
@@ -104,10 +120,12 @@ public class UserDAOImpl implements UserDAO {
 					userId = rs.getInt("user_id");
 				}
 			}
-		}
-
-		catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return userId;
 	}
@@ -133,8 +151,12 @@ public class UserDAOImpl implements UserDAO {
 					orderId = rs.getInt("order_id");
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return orderId;
 	}
@@ -152,6 +174,7 @@ public class UserDAOImpl implements UserDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 
 		return row;

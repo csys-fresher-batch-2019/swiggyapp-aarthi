@@ -1,12 +1,12 @@
 package com.aarthi.swiggyhotel.dao;
 
-import com.aarthi.swiggyhotel.impl.DiscountDAOImpl;
-import com.aarthi.swiggyhotel.impl.FoodItemDAOImpl;
-import com.aarthi.swiggyhotel.impl.MenuDAOImpl;
-import com.aarthi.swiggyhotel.impl.OrderDAOImpl;
-import com.aarthi.swiggyhotel.impl.OrderItemDAOImpl;
-import com.aarthi.swiggyhotel.impl.RatingPointDAOImpl;
-import com.aarthi.swiggyhotel.impl.UserDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.DiscountDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.FoodItemDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.MenuDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.OrderDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.OrderItemDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.RatingPointDAOImpl;
+import com.aarthi.swiggyhotel.dao.Impl.UserDAOImpl;
 
 public class DAOFactory {
 	public static DiscountDAO getDiscountDAO() {

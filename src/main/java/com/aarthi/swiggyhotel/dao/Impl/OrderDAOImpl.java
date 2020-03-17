@@ -1,12 +1,14 @@
-package com.aarthi.swiggyhotel.impl;
+package com.aarthi.swiggyhotel.dao.Impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import com.aarthi.swiggyhotel.dao.OrderDAO;
 import com.aarthi.swiggyhotel.exception.DbException;
+import com.aarthi.swiggyhotel.exception.ErrorConstant;
 import com.aarthi.swiggyhotel.model.Order;
 import com.aarthi.swiggyhotel.util.ConnectionUtil;
 import com.aarthi.swiggyhotel.util.LoggerUtil;
@@ -24,8 +26,13 @@ public class OrderDAOImpl implements OrderDAO {
 			logger.debug(sqlQuery);
 			row1 = pst.executeUpdate();
 			logger.info(row1 + "row updated");
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_UPDATE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return row1;
 	}
@@ -41,8 +48,13 @@ public class OrderDAOImpl implements OrderDAO {
 					logger.debug(totalAmts);
 				}
 			}
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return totalAmts;
 	}
@@ -57,8 +69,13 @@ public class OrderDAOImpl implements OrderDAO {
 			System.out.print(sql);
 			rows = pst.executeUpdate();
 			logger.info("row updated" + rows);
-		} catch (Exception e) {
+		}
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_UPDATE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return rows;
 	}
@@ -91,8 +108,13 @@ public class OrderDAOImpl implements OrderDAO {
 			pst.setTimestamp(4, Timestamp.valueOf(obj.getApproxDeliveryTime()));
 			int row1 = pst.executeUpdate();
 			logger.info(row1 + "row inserted");
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SAVE);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return orderId;
 	}
@@ -111,8 +133,13 @@ public class OrderDAOImpl implements OrderDAO {
 
 				}
 			}
-		} catch (Exception e) {
+		} 
+		catch (SQLException e) {
 			e.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_SELECT);
+		} catch (DbException e1) {
+			e1.printStackTrace();
+			throw new DbException(ErrorConstant.INVALID_CON_ERROR);
 		}
 		return c;
 	}
